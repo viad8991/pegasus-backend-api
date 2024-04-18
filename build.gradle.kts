@@ -31,12 +31,21 @@ dependencies {
     developmentOnly(Spring.boot.devTools)
 
     implementation(Spring.boot.web)
+    implementation(Spring.boot.data.jpa)
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
+
+    implementation("org.liquibase:liquibase-core")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    runtimeOnly("org.postgresql:postgresql")
+
+    // test deps
 
     testImplementation(Kotlin.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.zonky.test:embedded-database-spring-test:_")
+    testImplementation("io.zonky.test:embedded-postgres:_")
 }
 
 tasks {
