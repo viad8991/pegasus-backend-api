@@ -7,8 +7,25 @@ import org.pegasus.backendapi.restservice.service.impl.GreetingServiceImpl
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import org.springframework.web.reactive.function.server.coRouter
 
 val greetingInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
-    bean<GreetingService> { GreetingServiceImpl() }
     bean<GreetingController> { GreetingControllerImpl(ref()) }
+
+    bean {
+        val errorHandler = ref<ErrorHandler>()
+        val greetingService = ref<GreetingService>()
+        coRouter {
+            "/api".nest {
+                "/v1".nest {
+                    GET("list", greetingService::createResponse)
+                }
+            }
+            onError<RuntimeException> { throwable, serverRequest ->
+                errorHandler.handleError(throwable, serverRequest)
+            }
+        }
+    }
+
+    bean<GreetingService> { GreetingServiceImpl() }
 }

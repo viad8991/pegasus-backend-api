@@ -16,5 +16,6 @@ fun main(args: Array<String>) {
 object AppInitializer : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
         greetingInitializer.initialize(applicationContext)
+//        todoInitializer.initialize(applicationContext)
     }
 }

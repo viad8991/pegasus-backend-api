@@ -7,7 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 
 @ApplicationTest
-class GreetingControllerTest(
+class ToDoControllerTest(
     private val restTemplate: TestRestTemplate,
 ) {
 

@@ -28,19 +28,26 @@ repositories {
 }
 
 dependencies {
+    implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
 
     developmentOnly(Spring.boot.devTools)
 
-    implementation(Spring.boot.web)
-    implementation(Spring.boot.data.jpa)
+    implementation("io.github.oshai:kotlin-logging-jvm:_")
+
+//    implementation(Spring.boot.web)
+    implementation(Spring.boot.webflux)
+    // implementation(Spring.boot.data.jpa) - синхронная JPA
+    implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
 
     implementation("org.liquibase:liquibase-core")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-     runtimeOnly("com.h2database:h2:2.2.224")
+    implementation("io.r2dbc:r2dbc-h2")
+    // runtimeOnly("com.h2database:h2:2.2.224")
+
     // runtimeOnly("org.postgresql:postgresql")
 
     // test depends
