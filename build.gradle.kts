@@ -6,11 +6,13 @@ plugins {
 
     checkstyle
 
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
+
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.spring") version "1.9.23"
+    id("com.google.cloud.tools.jib") version "3.4.2"
 }
 
 group = "org.pegasus"
@@ -38,9 +40,10 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    runtimeOnly("org.postgresql:postgresql")
+     runtimeOnly("com.h2database:h2:2.2.224")
+    // runtimeOnly("org.postgresql:postgresql")
 
-    // test deps
+    // test depends
 
     testImplementation(Kotlin.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test")

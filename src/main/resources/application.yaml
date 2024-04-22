@@ -1,3 +1,14 @@
 context:
   initializer:
     classes: org.pegasus.backendapi.AppInitializer
+
+spring:
+  datasource:
+    # now is SQLite -> TODO to PostgreSQL
+    username: sa
+    password:
+    url: jdbc:h2:./build/database;
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect

@@ -1,0 +1,25 @@
+apiVersion: skaffold/v4beta10
+kind: Config
+
+#metadata:
+#  name: skaffold-pegasus-backend-api
+
+build:
+  artifacts:
+    - image: skaffold-pegasus-backend-api
+      jib: { }
+  local: { }
+
+deploy:
+  kubectl:
+    remoteManifests:
+      - k8s/base
+
+#profiles:
+#  - name: deps
+
+#deploy:
+#  kubectl:
+#    manifests:
+#      - k8s/deployment.yaml
+#      - k8s/service.yaml
