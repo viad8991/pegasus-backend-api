@@ -33,15 +33,16 @@ dependencies {
 
     developmentOnly(Spring.boot.devTools)
 
-    implementation("io.github.oshai:kotlin-logging-jvm:_")
-
+    /* SECURITY */
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("io.jsonwebtoken:jjwt:0.12.5")
+
+
+    implementation("io.github.oshai:kotlin-logging-jvm:_")
 
     implementation(Spring.boot.web)
     implementation(Spring.boot.webflux)
-    // implementation(Spring.boot.data.jpa) - синхронная JPA
-//    implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
 
@@ -51,10 +52,12 @@ dependencies {
 //    implementation("io.r2dbc:r2dbc-h2")
     // runtimeOnly("com.h2database:h2:2.2.224")
 
-    // runtimeOnly("org.postgresql:postgresql")
+    /* БД */
+    implementation(Spring.boot.data.jpa)
+    //implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
+    runtimeOnly("org.postgresql:postgresql")
 
-    // test depends
-
+    /* Test Depends */
     testImplementation(Kotlin.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
