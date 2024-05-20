@@ -1,25 +1,28 @@
-apiVersion: skaffold/v4beta10
+apiVersion: skaffold/v2beta26
 kind: Config
-
-#metadata:
-#  name: skaffold-pegasus-backend-api
-
+metadata:
+  name: pegasus-travel-planner
 build:
   artifacts:
-    - image: skaffold-pegasus-backend-api
-      jib: { }
-  local: { }
-
+    - image: pegasus-travel-planner
+      context: .
+      docker:
+        dockerfile: Dockerfile
 deploy:
   kubectl:
-    remoteManifests:
-      - k8s/base
-
-#profiles:
-#  - name: deps
-
-#deploy:
-#  kubectl:
-#    manifests:
-#      - k8s/deployment.yaml
-#      - k8s/service.yaml
+    manifests:
+      - k8s/deps/*
+      - k8s/spring-boot-app.yaml
+portForward:
+  - resourceType: service
+    resourceName: postgres-service
+    port: 5432
+    localPort: 5432
+profiles:
+  - name: depsOnly
+    build:
+      artifacts: []
+    deploy:
+      kubectl:
+        manifests:
+          - k8s/deps/*

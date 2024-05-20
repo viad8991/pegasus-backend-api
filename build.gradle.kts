@@ -35,17 +35,20 @@ dependencies {
 
     implementation("io.github.oshai:kotlin-logging-jvm:_")
 
-//    implementation(Spring.boot.web)
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation(Spring.boot.web)
     implementation(Spring.boot.webflux)
     // implementation(Spring.boot.data.jpa) - синхронная JPA
-    implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
+//    implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
 
     implementation("org.liquibase:liquibase-core")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    implementation("io.r2dbc:r2dbc-h2")
+//    implementation("io.r2dbc:r2dbc-h2")
     // runtimeOnly("com.h2database:h2:2.2.224")
 
     // runtimeOnly("org.postgresql:postgresql")

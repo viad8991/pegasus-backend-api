@@ -1,6 +1,5 @@
 package org.pegasus.backendapi
 
-import org.pegasus.backendapi.restservice.greetingInitializer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContextInitializer
@@ -15,7 +14,6 @@ fun main(args: Array<String>) {
 
 object AppInitializer : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
-        greetingInitializer.initialize(applicationContext)
-//        todoInitializer.initialize(applicationContext)
+
     }
 }

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pegasus-travel-planner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pegasus-travel-planner
+  template:
+    metadata:
+      labels:
+        app: pegasus-travel-planner
+    spec:
+      containers:
+        - name: pegasus-travel-planner
+          image: pegasus-travel-planner:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/your-database-name
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pegasus-travel-planner-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: pegasus-travel-planner
