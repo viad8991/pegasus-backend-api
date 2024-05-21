@@ -6,13 +6,15 @@ plugins {
 
     checkstyle
 
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.spring") version "1.9.23"
+    kotlin("jvm")
+    kotlin("plugin.spring")
 
-    id("org.springframework.boot") version "3.2.4"
-    id("io.spring.dependency-management") version "1.1.4"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 
-    id("com.google.cloud.tools.jib") version "3.4.2"
+    id("org.liquibase.gradle")
+
+    id("com.google.cloud.tools.jib")
 }
 
 group = "org.pegasus"
@@ -28,38 +30,41 @@ repositories {
 }
 
 dependencies {
+    /* Kotlin */
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
 
+    /* DevTools */
     developmentOnly(Spring.boot.devTools)
 
     /* SECURITY */
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt:0.12.5")
+    implementation(Spring.boot.oauth2Client)
+    implementation(Spring.boot.security)
+    implementation("io.jsonwebtoken:jjwt-api:_")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:_")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:_")
 
-
+    /* logging (replace) */
     implementation("io.github.oshai:kotlin-logging-jvm:_")
 
+    /* spring web */
     implementation(Spring.boot.web)
     implementation(Spring.boot.webflux)
 
+    /* ??? */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
 
-    implementation("org.liquibase:liquibase-core")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-//    implementation("io.r2dbc:r2dbc-h2")
-    // runtimeOnly("com.h2database:h2:2.2.224")
+    /* json parse */
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:_")
 
     /* БД */
-    implementation(Spring.boot.data.jpa)
-    //implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
-    runtimeOnly("org.postgresql:postgresql")
+    implementation(Spring.boot.data.jpa)  // implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
+    liquibaseRuntime("org.liquibase:liquibase-core:_")
+    runtimeOnly("org.postgresql:postgresql:_")
 
     /* Test Depends */
     testImplementation(Kotlin.test)
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(Spring.boot.test)
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
     testImplementation("io.zonky.test:embedded-postgres:_")
 }

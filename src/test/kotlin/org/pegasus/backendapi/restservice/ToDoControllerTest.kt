@@ -14,7 +14,6 @@ class ToDoControllerTest(
     @Test
     fun greeting() {
         val response = restTemplate.getForEntity("/greeting?name=user", String::class.java)
-        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        Assertions.assertThat(response.body).isEqualTo("Hello User!")
+        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
     }
 }

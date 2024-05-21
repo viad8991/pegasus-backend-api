@@ -1,14 +1,11 @@
 package org.pegasus.backendapi.model.entity
 
-import jakarta.persistence.Entity
-
-@Entity
 enum class Role(val ruName: String) {
 
-    ADMIN("Администратор"),
+    ROLE_ADMIN("Администратор"),
 
-    USER("Пользователь"),
+    ROLE_USER("Пользователь"),
 
-    GUEST("Гость"),
+    ROLE_GUEST("Гость"),
 
 }

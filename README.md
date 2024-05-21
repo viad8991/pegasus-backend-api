@@ -34,6 +34,13 @@ Java - 17
 ./gradlew test - локально запустить выполнение тестов
 
 ./gradlew rV - проверить наличие вышедших версий зависимостей
+
+minikube start
+
+skaffold run --port-forward
+
+minikube delete
+
 ```
 
 ---

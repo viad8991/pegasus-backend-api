@@ -4,10 +4,16 @@ context:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres-service:5432/db
-    username: user
-    password: password
+    url: jdbc:postgresql://${datasource.host}/${datasource.database}?currentSchema=${datasource.schema}
+    username: ${datasource.username}
+    password: ${datasource.password}
     driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    default-schema: ${datasource.schema}
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    parameters:
+      schema: ${datasource.schema}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

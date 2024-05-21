@@ -2,32 +2,33 @@ package org.pegasus.backendapi.security
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 import java.util.*
+import javax.crypto.SecretKey
 
-@Component
-class JwtUtils(
-    @Value("\${jwt.secret}") private val secret: String
-) {
+// DOCS: https://github.com/jwtk/jjwt#installation
+
+class JwtUtil {
+
+    private val tenDaysInMills = 1000 * 60 * 60 * 10
+    private val secretKey: SecretKey = Jwts.SIG.HS256.key().build()
+
     fun generateToken(username: String): String {
-        val claims: Map<String, Any> = HashMap()
+
         return Jwts.builder()
-            .claims(claims)
+            // .claims(claims)
             .subject(username)
             .issuedAt(Date(System.currentTimeMillis()))
-            .expiration(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-            .signWith(SignatureAlgorithm.HS256, secret).compact()
+            .expiration(Date(System.currentTimeMillis() + tenDaysInMills))
+            .signWith(secretKey)
+            .compact()
     }
 
     fun extractUsername(token: String): String {
         return extractAllClaims(token).subject
     }
 
-    private fun extractAllClaims(token: String): Claims {
-//        return Jwts.parser().verifyWith() setSigningKey(secret).parseClaimsJws(token).body
-    }
+    private fun extractAllClaims(token: String): Claims = Jwts
+        .parser().verifyWith(secretKey).build().parseSignedClaims(token).payload
 
     fun validateToken(token: String, username: String): Boolean {
         val extractedUsername = extractUsername(token)

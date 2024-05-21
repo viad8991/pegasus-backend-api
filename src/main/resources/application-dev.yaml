@@ -1,1 +1,16 @@
-# TODO properties fot dev
+datasource:
+  host: localhost
+  username: user
+  password: password
+  schema: public
+  database: db
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        web: TRACE
+#        security: TRACE
+#      pegasus:
+#        backendapi:
+#          auth: TRACE
