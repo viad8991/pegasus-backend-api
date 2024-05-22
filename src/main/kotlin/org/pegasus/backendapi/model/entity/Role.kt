@@ -2,10 +2,10 @@ package org.pegasus.backendapi.model.entity
 
 enum class Role(val ruName: String) {
 
-    ROLE_ADMIN("Администратор"),
+    ADMIN("Администратор"),
 
-    ROLE_USER("Пользователь"),
+    USER("Пользователь"),
 
-    ROLE_GUEST("Гость"),
+    GUEST("Гость"),
 
 }

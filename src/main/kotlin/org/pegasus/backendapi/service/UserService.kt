@@ -1,6 +1,7 @@
-package org.pegasus.backendapi.security
+package org.pegasus.backendapi.service
 
 import org.pegasus.backendapi.model.entity.User
+import org.pegasus.backendapi.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 
 class UserService(

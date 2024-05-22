@@ -1,6 +1,7 @@
 package org.pegasus.backendapi.security
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import org.pegasus.backendapi.service.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

@@ -1,7 +1,7 @@
-package org.pegasus.backendapi.auth
+package org.pegasus.backendapi.controller
 
 import org.pegasus.backendapi.security.JwtUtil
-import org.pegasus.backendapi.security.UserService
+import org.pegasus.backendapi.service.UserService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.AuthenticationException

@@ -1,7 +1,8 @@
 package org.pegasus.backendapi
 
-import org.pegasus.backendapi.auth.authInitializer
+import org.pegasus.backendapi.repository.repositoriesInitializer
 import org.pegasus.backendapi.security.securityInitializer
+import org.pegasus.backendapi.service.servicesInitializer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContextInitializer
@@ -17,8 +18,9 @@ fun main(args: Array<String>) {
 
 object AppInitializer : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
+        repositoriesInitializer.initialize(applicationContext)
         securityInitializer.initialize(applicationContext)
-        authInitializer.initialize(applicationContext)
+        servicesInitializer.initialize(applicationContext)
     }
 }
 
