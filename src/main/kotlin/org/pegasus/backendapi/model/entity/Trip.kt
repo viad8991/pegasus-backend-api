@@ -7,14 +7,14 @@ import java.util.*
 
 @Entity
 @Table(name = "trips")
-data class Trip(
+class Trip(
     val name: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     private val user: User,
 
     @OneToMany(fetch = FetchType.LAZY)
-    val destinations: List<Destination> = listOf()
+    var destinations: List<Destination> = listOf()
 ) {
 
     @Id
@@ -27,8 +27,4 @@ data class Trip(
 
     @Version
     val version: Long = 0
-
-    override fun toString(): String {
-        return "Trip{name=$name, user=${user.username}, destinationsCount=${destinations.size}}"
-    }
 }

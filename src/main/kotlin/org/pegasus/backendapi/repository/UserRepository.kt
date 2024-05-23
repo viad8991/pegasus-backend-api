@@ -10,7 +10,7 @@ import org.pegasus.backendapi.model.entity.User
 open class UserRepository(private val entityManager: EntityManager) {
 
     fun create(username: String, password: String, email: String): User {
-        val user = User(username = username, password = password, email = email, role = Role.USER)
+        val user = User(username, password, email, Role.USER)
         entityManager.persist(user)
         return user
     }

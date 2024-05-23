@@ -27,8 +27,10 @@ class TripService(
         val destination = Destination(trip, destinRequest.city, destinRequest.startDate, destinRequest.startDate)
 
         val updatedDestinations = trip.destinations.toMutableList().apply { add(destination) }
-        val updatedTrip = trip.copy(destinations = updatedDestinations)
 
-        return tripRepository.update(updatedTrip)
+        // val updatedTrip = trip.copy(destinations = updatedDestinations)
+        trip.destinations = updatedDestinations
+
+        return tripRepository.update(trip)
     }
 }

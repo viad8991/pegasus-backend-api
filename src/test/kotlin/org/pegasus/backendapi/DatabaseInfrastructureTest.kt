@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 @ApplicationTest
 class DatabaseInfrastructureTest(private val enf: EntityManagerFactory) {
     @Test
-    fun contextLoads() {
+    fun `database infrastructure test`() {
         val em = enf.createEntityManager()
         assertTrue(em.isOpen)
         em.close()
