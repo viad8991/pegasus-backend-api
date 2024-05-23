@@ -7,25 +7,28 @@ import java.util.*
 
 @Entity
 @Table(name = "trips")
-class Trip(
+data class Trip(
+    val name: String,
 
-    @Id
-    val id: UUID = UUID.randomUUID(),
-
-    private val name: String,
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private val user: User,
 
-    val email: String,
+    @OneToMany(fetch = FetchType.LAZY)
+    val destinations: List<Destination> = listOf()
+) {
 
-    @Enumerated(EnumType.STRING)
-    val role: Role,
+    @Id
+    val id: UUID = UUID.randomUUID()
 
-    val created: Instant = Instant.now(),
+    val created: Instant = Instant.now()
+
     @UpdateTimestamp
-    val update: Instant = Instant.now(),
+    val update: Instant = Instant.now()
+
     @Version
     val version: Long = 0
 
-)
+    override fun toString(): String {
+        return "Trip{name=$name, user=${user.username}, destinationsCount=${destinations.size}}"
+    }
+}

@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-users-table-20240520
+      id: create-destinations-table-20240523
       author: vshevchenko
       changes:
         - createTable:
-            tableName: users
+            tableName: destinations
             columns:
               - column:
                   name: id
@@ -14,23 +14,23 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: username
+                  name: trip_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: password
-                  type: VARCHAR(255)
+                  name: start_date
+                  type: TIMESTAMP WITH TIME ZONE
                   constraints:
                     nullable: false
               - column:
-                  name: email
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: role
-                  type: VARCHAR(32)
+                  name: end_date
+                  type: TIMESTAMP WITH TIME ZONE
                   constraints:
                     nullable: false
 
@@ -52,25 +52,3 @@ databaseChangeLog:
                   defaultValue: '0'
                   constraints:
                     nullable: false
-
-        - createIndex:
-            tableName: users
-            indexName: idx_users_username
-            columns:
-              - column:
-                  name: username
-                  descending: false
-
-        - createIndex:
-            tableName: users
-            indexName: idx_users_email
-            columns:
-              - column:
-                  name: email
-                  descending: false
-
-#        -  sqlFile:
-#             dbms: 'postgresql'
-#             splitStatements:  true
-#             path: db/changelog/changes/sql/insert-user.sql
-#             stripComments:  true

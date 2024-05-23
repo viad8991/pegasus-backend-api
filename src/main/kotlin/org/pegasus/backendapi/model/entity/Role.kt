@@ -1,11 +1,11 @@
 package org.pegasus.backendapi.model.entity
 
-enum class Role(val ruName: String) {
+enum class Role(val ru: String, en: String) {
 
-    ADMIN("Администратор"),
+    ADMIN("Администратор", "Admin"),
 
-    USER("Пользователь"),
+    USER("Пользователь", "User"),
 
-    GUEST("Гость"),
+    GUEST("Гость", "Guest"),
 
 }

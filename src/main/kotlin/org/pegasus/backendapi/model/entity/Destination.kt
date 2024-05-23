@@ -9,19 +9,23 @@ import java.util.*
 @Table(name = "destinations")
 data class Destination(
 
-    @Id
-    val id: UUID = UUID.randomUUID(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    val trip: Trip,
 
     val city: String,
     val startDate: Instant,
-    val endDate: Instant,
+    val endDate: Instant
 
-    @ManyToOne
-    val trip: Trip,
+) {
 
-    val created: Instant = Instant.now(),
+    @Id
+    val id: UUID = UUID.randomUUID()
+
+    val created: Instant = Instant.now()
+
     @UpdateTimestamp
-    val update: Instant = Instant.now(),
+    val update: Instant = Instant.now()
+
     @Version
     val version: Long = 0
-)
+}

@@ -12,9 +12,6 @@ import java.util.*
 @Table(name = "users")
 class User(
 
-    @Id
-    val id: UUID = UUID.randomUUID(),
-
     private val username: String,
 
     private val password: String,
@@ -22,15 +19,20 @@ class User(
     val email: String,
 
     @Enumerated(EnumType.STRING)
-    val role: Role,
-
-    val created: Instant = Instant.now(),
-    @UpdateTimestamp
-    val update: Instant = Instant.now(),
-    @Version
-    val version: Long = 0
+    val role: Role
 
 ) : UserDetails {
+
+    @Id
+    val id: UUID = UUID.randomUUID()
+
+    val created: Instant = Instant.now()
+
+    @UpdateTimestamp
+    val update: Instant = Instant.now()
+
+    @Version
+    val version: Long = 0
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableSetOf(SimpleGrantedAuthority(role.name))
