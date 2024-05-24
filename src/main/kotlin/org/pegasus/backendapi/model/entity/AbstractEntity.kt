@@ -1,21 +1,14 @@
 package org.pegasus.backendapi.model.entity
 
-import jakarta.persistence.*
+import jakarta.persistence.Id
+import jakarta.persistence.MappedSuperclass
+import jakarta.persistence.Version
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.Instant
 import java.util.*
 
-@Entity
-@Table(name = "trips")
-class Trip(
-    val name: String,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private val user: User,
-
-    @OneToMany(fetch = FetchType.LAZY)
-    var destinations: List<Destination> = listOf()
-) {
+@MappedSuperclass
+abstract class AbstractEntity {
 
     @Id
     val id: UUID = UUID.randomUUID()

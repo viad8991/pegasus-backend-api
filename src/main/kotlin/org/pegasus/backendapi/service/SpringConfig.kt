@@ -1,12 +1,12 @@
 package org.pegasus.backendapi.service
 
-import org.pegasus.backendapi.repository.TripRepository
+import org.pegasus.backendapi.route.TripRepository
 import org.pegasus.backendapi.repository.UserRepository
+import org.pegasus.backendapi.route.TripService
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.web.client.RestTemplate
 
 val servicesInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
 
@@ -24,10 +24,4 @@ val servicesInitializer: ApplicationContextInitializer<GenericApplicationContext
         TripService(tripRepository, userService)
     }
 
-    bean {
-        val yandexTravelSettings = ref<YandexTravelSettings>()
-        val restTemplate = RestTemplate()
-
-        YandexTravelService(yandexTravelSettings, restTemplate)
-    }
 }

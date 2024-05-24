@@ -1,7 +1,5 @@
-package org.pegasus.backendapi.controller
+package org.pegasus.backendapi.route
 
-import org.pegasus.backendapi.model.entity.Trip
-import org.pegasus.backendapi.service.TripService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*

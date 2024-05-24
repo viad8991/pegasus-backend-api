@@ -1,8 +1,7 @@
-package org.pegasus.backendapi.repository
+package org.pegasus.backendapi.route
 
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
-import org.pegasus.backendapi.model.entity.Trip
 import org.pegasus.backendapi.model.entity.User
 import java.util.*
 

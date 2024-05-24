@@ -1,7 +1,11 @@
 package org.pegasus.backendapi
 
+import com.github.database.rider.core.api.configuration.DBUnit
+import com.github.database.rider.core.connection.RiderDataSource
+import com.github.database.rider.spring.api.DBRider
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
 import org.junit.jupiter.api.TestInstance
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
@@ -12,6 +16,11 @@ import org.springframework.test.context.TestConstructor
 )
 @ActiveProfiles("test")
 
+@DBRider
+@DBUnit(
+    expectedDbType = RiderDataSource.DBType.POSTGRESQL,
+    cacheConnection = true
+)
 @AutoConfigureEmbeddedDatabase(
     provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY,
     type = AutoConfigureEmbeddedDatabase.DatabaseType.POSTGRES

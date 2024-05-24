@@ -1,10 +1,6 @@
-package org.pegasus.backendapi.service
+package org.pegasus.backendapi.route
 
-import org.pegasus.backendapi.controller.DestinationRequest
-import org.pegasus.backendapi.controller.TripRequest
-import org.pegasus.backendapi.model.entity.Destination
-import org.pegasus.backendapi.model.entity.Trip
-import org.pegasus.backendapi.repository.TripRepository
+import org.pegasus.backendapi.service.UserService
 import java.util.*
 
 class TripService(
@@ -32,5 +28,9 @@ class TripService(
         trip.destinations = updatedDestinations
 
         return tripRepository.update(trip)
+    }
+
+    fun findById(tripId: Long): Trip {
+        TODO("Not yet implemented")
     }
 }

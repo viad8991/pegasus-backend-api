@@ -20,7 +20,7 @@ class AuthController(
 
     @PostMapping("/register")
     fun register(@RequestBody register: RegisterRequest): String {
-        val newUser = userService.registerUser(register.email, register.username, register.password)
+        val newUser = userService.register(register.email, register.username, register.password)
         return "User ${newUser.username} registered successfully"
     }
 

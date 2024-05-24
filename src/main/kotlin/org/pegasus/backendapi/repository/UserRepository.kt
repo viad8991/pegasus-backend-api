@@ -1,14 +1,18 @@
 package org.pegasus.backendapi.repository
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.persistence.EntityManager
+import jakarta.persistence.NoResultException
 import jakarta.transaction.Transactional
-import org.pegasus.backendapi.model.entity.Role
+import org.pegasus.backendapi.model.Role
 import org.pegasus.backendapi.model.entity.User
+import java.util.*
 
-
-@Transactional
 open class UserRepository(private val entityManager: EntityManager) {
 
+    private val log = KotlinLogging.logger { }
+
+    @Transactional
     fun create(username: String, password: String, email: String): User {
         val user = User(username, password, email, Role.USER)
         entityManager.persist(user)
@@ -16,8 +20,16 @@ open class UserRepository(private val entityManager: EntityManager) {
     }
 
     fun findByUsername(username: String): User? {
-        return entityManager.createQuery("SELECT u FROM User WHERE u.username = :username", User::class.java)
-            .setParameter("username", username)
-            .singleResult
+        return try {
+            entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User::class.java)
+                .setParameter("username", username)
+                .singleResult
+        } catch (ex: NoResultException) {
+            log.debug(ex) { "cant not find user by username $username" }
+            null
+        }
     }
+
+    fun findById(userId: UUID): User? = entityManager.find(User::class.java, userId)
+
 }

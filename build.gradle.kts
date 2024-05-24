@@ -31,6 +31,7 @@ repositories {
 
 dependencies {
     /* Kotlin */
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
 
@@ -65,6 +66,8 @@ dependencies {
     /* Test Depends */
     testImplementation(Kotlin.test)
     testImplementation(Spring.boot.test)
+    testImplementation("com.github.database-rider:rider-core:1.42.0")
+    testImplementation("com.github.database-rider:rider-spring:1.42.0")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
     testImplementation("io.zonky.test:embedded-postgres:_")
 }

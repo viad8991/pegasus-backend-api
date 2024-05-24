@@ -1,4 +1,4 @@
-package org.pegasus.backendapi.model.entity
+package org.pegasus.backendapi.model
 
 enum class Role(val ru: String, en: String) {
 
