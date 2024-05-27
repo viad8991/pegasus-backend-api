@@ -6,6 +6,8 @@ import jakarta.persistence.NoResultException
 import jakarta.transaction.Transactional
 import org.pegasus.backendapi.model.Role
 import org.pegasus.backendapi.model.entity.User
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 import java.util.*
 
 open class UserRepository(private val entityManager: EntityManager) {
@@ -32,4 +34,9 @@ open class UserRepository(private val entityManager: EntityManager) {
 
     fun findById(userId: UUID): User? = entityManager.find(User::class.java, userId)
 
+}
+
+@Repository
+interface UserRepositoryJPA : JpaRepository<User, UUID> {
+    fun findByUsername(username: String): User?
 }

@@ -1,8 +1,9 @@
-package org.pegasus.backendapi.route
+package org.pegasus.backendapi.route.trip
 
 import jakarta.persistence.*
 import org.pegasus.backendapi.model.entity.AbstractEntity
 import org.pegasus.backendapi.model.entity.User
+import org.pegasus.backendapi.route.destination.Destination
 
 @Entity
 @Table(name = "trips")

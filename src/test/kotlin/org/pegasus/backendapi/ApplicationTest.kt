@@ -5,7 +5,6 @@ import com.github.database.rider.core.connection.RiderDataSource
 import com.github.database.rider.spring.api.DBRider
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
 import org.junit.jupiter.api.TestInstance
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor

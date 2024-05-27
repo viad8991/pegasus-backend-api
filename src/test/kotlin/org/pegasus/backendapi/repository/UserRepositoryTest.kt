@@ -1,6 +1,5 @@
 package org.pegasus.backendapi.repository
 
-import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

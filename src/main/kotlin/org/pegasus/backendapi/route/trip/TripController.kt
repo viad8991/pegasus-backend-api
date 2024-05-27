@@ -1,4 +1,4 @@
-package org.pegasus.backendapi.route
+package org.pegasus.backendapi.route.trip
 
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication

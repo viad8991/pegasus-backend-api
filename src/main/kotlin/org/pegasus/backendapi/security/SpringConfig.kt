@@ -7,10 +7,11 @@ import org.springframework.context.support.beans
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.filter.OncePerRequestFilter
 
 val securityInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
-    bean { BCryptPasswordEncoder() }
+    bean<PasswordEncoder> { BCryptPasswordEncoder() }
     bean { JwtUtil() }
 
     bean<AuthenticationManager> {
@@ -26,9 +27,8 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
     }
 
     bean {
-        val userService: UserService = ref()
-        val jwtRequestFilter: JwtRequestFilter = ref()
+        val jwtRequestFilter = ref<JwtRequestFilter>()
 
-        SecurityConfig(userService, jwtRequestFilter)
+        SecurityConfig(jwtRequestFilter)
     }
 }

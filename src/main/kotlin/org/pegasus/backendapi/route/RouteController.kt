@@ -1,5 +1,7 @@
 package org.pegasus.backendapi.route
 
+import org.pegasus.backendapi.route.destination.Destination
+import org.pegasus.backendapi.route.trip.TripService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/routes")
+@RequestMapping("/api/v1/routes")
 class RouteController(
     @Autowired private val tripService: TripService
 ) {

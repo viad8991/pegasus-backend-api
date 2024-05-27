@@ -1,5 +1,6 @@
-package org.pegasus.backendapi.route
+package org.pegasus.backendapi.route.trip
 
+import org.pegasus.backendapi.route.destination.Destination
 import org.pegasus.backendapi.service.UserService
 import java.util.*
 

@@ -1,4 +1,4 @@
-package org.pegasus.backendapi.route
+package org.pegasus.backendapi.route.destination
 
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional

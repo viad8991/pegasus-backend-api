@@ -5,7 +5,7 @@ import org.pegasus.backendapi.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 
-class UserService(
+open class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {

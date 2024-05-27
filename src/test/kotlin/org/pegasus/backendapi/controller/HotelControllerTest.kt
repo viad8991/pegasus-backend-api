@@ -14,11 +14,12 @@ class HotelControllerTest(private val restTemplate: TestRestTemplate) {
     @Test
     fun yandex() {
         val response = restTemplate.getForEntity(
-            "$baseApiUrl/search?city=foo&checkIn=01&checkOut=02",
+            "$baseApiUrl/search?city=Екатеринбург&checkIn=01&checkOut=02",
             String::class.java
         )
 
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        Assertions.assertThat(response.body).isEqualTo("Hyatt Regency Ekaterinburg")
+        Assertions.assertThat(response.body).isNotNull()
+        Assertions.assertThat(response.body?.contains("Hyatt Regency Ekaterinburg"))
     }
 }

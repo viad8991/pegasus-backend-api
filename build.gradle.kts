@@ -66,6 +66,8 @@ dependencies {
     /* Test Depends */
     testImplementation(Kotlin.test)
     testImplementation(Spring.boot.test)
+    testImplementation("org.assertj:assertj-db:2.0.2")
+    testImplementation("org.assertj:assertj-core:3.26.0")
     testImplementation("com.github.database-rider:rider-core:1.42.0")
     testImplementation("com.github.database-rider:rider-spring:1.42.0")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")

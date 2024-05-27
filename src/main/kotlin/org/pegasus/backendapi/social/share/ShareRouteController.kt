@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
+import java.util.*
 
 @RestController
-@RequestMapping("/share")
+@RequestMapping("/api/v1/share")
 class ShareRouteController(
-    @Autowired  private val routeService: RouteService,
+    @Autowired private val routeService: RouteService,
     @Autowired private val userService: UserService
 ) {
 
