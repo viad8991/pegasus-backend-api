@@ -6,7 +6,7 @@ import org.pegasus.backendapi.model.entity.User
 import java.util.*
 
 @Transactional
-open class TripRepository(private val em: EntityManager) {
+class TripRepository(private val em: EntityManager) {
 
     fun findById(tripId: UUID): Trip? = em.find(Trip::class.java, tripId)
 

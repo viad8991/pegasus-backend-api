@@ -8,10 +8,7 @@ import org.pegasus.backendapi.ApplicationTest
 import org.pegasus.backendapi.model.entity.User
 
 @ApplicationTest
-class UserServiceTest(
-    private val userService: UserService,
-    private val entityManager: EntityManager
-) {
+class UserServiceTest(private val userService: UserService) {
 
     @Test
     fun `full user service`() {
@@ -24,7 +21,7 @@ class UserServiceTest(
         Assertions.assertThat(registerUser.id).isNotNull
         Assertions.assertThat(registerUser.username).isEqualTo(email)
         Assertions.assertThat(registerUser.email).isEqualTo(email)
-        Assertions.assertThat(registerUser.password).isEqualTo(password)
+        Assertions.assertThat(registerUser.password).startsWith("$")
 
         // И так конечно лучше не делать...
         val registerUserId = registerUser.id
@@ -33,17 +30,17 @@ class UserServiceTest(
         Assertions.assertThat(userFindByName).isNotNull
         Assertions.assertThat(userFindByName?.id).isEqualTo(registerUserId)
         Assertions.assertThat(userFindByName?.username).isEqualTo(email)
-        Assertions.assertThat(userFindByName?.password).isEqualTo(password)
+        Assertions.assertThat(userFindByName?.password).startsWith("$")
         Assertions.assertThat(userFindByName?.email).isEqualTo(email)
 
         val userFindById: User? = userService.findById(registerUserId)
         Assertions.assertThat(userFindById).isNotNull
         Assertions.assertThat(userFindById?.id).isEqualTo(registerUserId)
         Assertions.assertThat(userFindById?.username).isEqualTo(username)
-        Assertions.assertThat(userFindById?.password).isEqualTo(password)
+        Assertions.assertThat(userFindById?.password).startsWith("$")
         Assertions.assertThat(userFindById?.email).isEqualTo(email)
 
-        val userFindByNameNotExist: User? = userService.findByUsername("username")
+        val userFindByNameNotExist: User? = userService.findByUsername("foobar")
         Assertions.assertThat(userFindByNameNotExist).isNull()
     }
 }

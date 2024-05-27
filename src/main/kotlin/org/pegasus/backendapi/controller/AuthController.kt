@@ -1,5 +1,6 @@
 package org.pegasus.backendapi.controller
 
+import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.security.JwtUtil
 import org.pegasus.backendapi.service.UserService
 import org.springframework.security.authentication.AuthenticationManager
@@ -18,6 +19,8 @@ class AuthController(
     private val authenticationManager: AuthenticationManager
 ) {
 
+    private val log = logger()
+
     @PostMapping("/register")
     fun register(@RequestBody register: RegisterRequest): String {
         val newUser = userService.register(register.email, register.username, register.password)
@@ -26,6 +29,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(@RequestBody request: AuthRequest): AuthResponse {
+        log.info { "new request with login ${request.username}" }
         try {
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(

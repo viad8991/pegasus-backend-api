@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional
 import java.util.*
 
 @Transactional
-open class CommentRepository(private val entityManager: EntityManager) {
+class CommentRepository(private val entityManager: EntityManager) {
 
     fun create(comment: Comment): Comment = comment.also {
         entityManager.persist(it)

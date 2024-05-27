@@ -8,13 +8,13 @@ plugins {
 
     kotlin("jvm")
     kotlin("plugin.spring")
+    kotlin("plugin.jpa")
+    kotlin("plugin.allopen")
 
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 
     id("org.liquibase.gradle")
-
-    id("com.google.cloud.tools.jib")
 }
 
 group = "org.pegasus"
@@ -31,22 +31,19 @@ repositories {
 
 dependencies {
     /* Kotlin */
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
+    runtimeOnly("org.apache.logging.log4j:log4j-api-kotlin:_")
 
     /* DevTools */
     developmentOnly(Spring.boot.devTools)
 
     /* SECURITY */
-    implementation(Spring.boot.oauth2Client)
     implementation(Spring.boot.security)
-    implementation("io.jsonwebtoken:jjwt-api:_")
+    implementation(Spring.boot.oauth2Client)
     runtimeOnly("io.jsonwebtoken:jjwt-impl:_")
+    implementation("io.jsonwebtoken:jjwt-api:_")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:_")
-
-    /* logging (replace) */
-    implementation("io.github.oshai:kotlin-logging-jvm:_")
 
     /* spring web */
     implementation(Spring.boot.web)
@@ -60,18 +57,18 @@ dependencies {
 
     /* БД */
     implementation(Spring.boot.data.jpa)  // implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
-    liquibaseRuntime("org.liquibase:liquibase-core:_")
     runtimeOnly("org.postgresql:postgresql:_")
+    liquibaseRuntime("org.liquibase:liquibase-core:_")
 
     /* Test Depends */
     testImplementation(Kotlin.test)
     testImplementation(Spring.boot.test)
-    testImplementation("org.assertj:assertj-db:2.0.2")
-    testImplementation("org.assertj:assertj-core:3.26.0")
-    testImplementation("com.github.database-rider:rider-core:1.42.0")
-    testImplementation("com.github.database-rider:rider-spring:1.42.0")
-    testImplementation("io.zonky.test:embedded-database-spring-test:_")
+    testImplementation(Testing.assertj.db)
+    testImplementation(Testing.assertj.core)
     testImplementation("io.zonky.test:embedded-postgres:_")
+    testImplementation("com.github.database-rider:rider-core:_")
+    testImplementation("com.github.database-rider:rider-spring:_")
+    testImplementation("io.zonky.test:embedded-database-spring-test:_")
 }
 
 tasks {
@@ -87,11 +84,23 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "21"
+        compilerOptions {
+            freeCompilerArgs.add("-Xjsr305=strict")
         }
     }
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.transaction.Transactional")
+    annotation("jakarta.persistence.MappedSuperclass")
 }
 
 repositories {

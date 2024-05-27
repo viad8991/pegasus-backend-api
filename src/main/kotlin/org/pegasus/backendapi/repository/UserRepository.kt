@@ -1,18 +1,19 @@
 package org.pegasus.backendapi.repository
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.persistence.EntityManager
 import jakarta.persistence.NoResultException
 import jakarta.transaction.Transactional
+import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.model.Role
 import org.pegasus.backendapi.model.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*
 
-open class UserRepository(private val entityManager: EntityManager) {
+@Transactional
+class UserRepository(private val entityManager: EntityManager) {
 
-    private val log = KotlinLogging.logger { }
+    private val log = logger()
 
     @Transactional
     fun create(username: String, password: String, email: String): User {

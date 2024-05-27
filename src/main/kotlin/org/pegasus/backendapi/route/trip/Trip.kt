@@ -13,6 +13,6 @@ class Trip(
     @ManyToOne(fetch = FetchType.LAZY)
     private val user: User,
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = Destination::class)
     var destinations: List<Destination> = listOf()
 ) : AbstractEntity()
