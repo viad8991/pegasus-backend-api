@@ -12,12 +12,12 @@ deploy:
   kubectl:
     manifests:
       - k8s/deps/*
-      - k8s/spring-boot-app.yaml
-portForward:
-  - resourceType: service
-    resourceName: postgres-service
-    port: 5432
-    localPort: 5432
+#      - k8s/spring-boot-app.yaml
+#portForward:
+#  - resourceType: service
+#    resourceName: postgres-service
+#    port: 5432
+#    localPort: 5432
 profiles:
   - name: depsOnly
     build:

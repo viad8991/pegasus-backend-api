@@ -1,6 +1,6 @@
 package org.pegasus.backendapi.security
 
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import org.apache.logging.log4j.kotlin.logger
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -10,7 +10,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 class SecurityConfig(private val jwtRequestFilter: JwtRequestFilter) {
-    private val log = logger(this.javaClass.name)
+
+    private val log = logger()
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =

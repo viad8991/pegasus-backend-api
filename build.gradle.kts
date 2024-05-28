@@ -33,7 +33,7 @@ dependencies {
     /* Kotlin */
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
-    runtimeOnly("org.apache.logging.log4j:log4j-api-kotlin:_")
+    implementation("org.apache.logging.log4j:log4j-api-kotlin:_")
 
     /* DevTools */
     developmentOnly(Spring.boot.devTools)
@@ -69,6 +69,9 @@ dependencies {
     testImplementation("com.github.database-rider:rider-core:_")
     testImplementation("com.github.database-rider:rider-spring:_")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
+
+    /* FRONTEND */
+    implementation("org.springframework.boot:spring-boot-starter-mustache")
 }
 
 tasks {
