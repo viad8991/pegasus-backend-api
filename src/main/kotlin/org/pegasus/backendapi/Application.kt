@@ -5,6 +5,7 @@ import org.pegasus.backendapi.route.routeInitializer
 import org.pegasus.backendapi.routepoint.hotelInitializer
 import org.pegasus.backendapi.security.securityInitializer
 import org.pegasus.backendapi.service.servicesInitializer
+import org.pegasus.backendapi.site.siteInitializer
 import org.pegasus.backendapi.social.socialInitializer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -31,5 +32,7 @@ object AppInitializer : ApplicationContextInitializer<GenericApplicationContext>
         routeInitializer.initialize(applicationContext)
         hotelInitializer.initialize(applicationContext)
         socialInitializer.initialize(applicationContext)
+
+        siteInitializer(applicationContext).initialize(applicationContext)
     }
 }

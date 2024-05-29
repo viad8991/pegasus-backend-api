@@ -21,6 +21,10 @@ spring:
       ddl-auto: update
     show-sql: true
 
+#  mustache:
+#    suffix: .html
+#    charset: UTF-8
+
 api:
   yandex:
     travel:

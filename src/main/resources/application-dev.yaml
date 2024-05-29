@@ -5,12 +5,12 @@ datasource:
   schema: public
   database: db
 
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        web: TRACE
-#        security: TRACE
-#      pegasus:
-#        backendapi:
-#          auth: TRACE
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+
+      pegasus:
+        backendapi: INFO

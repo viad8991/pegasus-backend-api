@@ -71,7 +71,7 @@ dependencies {
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
 
     /* FRONTEND */
-    implementation("org.springframework.boot:spring-boot-starter-mustache")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 }
 
 tasks {
