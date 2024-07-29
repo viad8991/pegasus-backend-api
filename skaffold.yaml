@@ -1,13 +1,13 @@
 apiVersion: skaffold/v2beta26
 kind: Config
-metadata:
-  name: pegasus-travel-planner
+#metadata:
+#  name: pegasus-travel-planner
 build:
-  artifacts:
-    - image: pegasus-travel-planner
-      context: .
-      docker:
-        dockerfile: Dockerfile
+#  artifacts:
+#    - image: pegasus-travel-planner
+#      context: .
+#      docker:
+#        dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:

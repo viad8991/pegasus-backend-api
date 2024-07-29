@@ -4,7 +4,7 @@ databaseChangeLog:
       author: vshevchenko
       changes:
         - createTable:
-            tableName: users
+            tableName: transactions
             columns:
               - column:
                   name: id
@@ -15,31 +15,28 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: username
-                  type: VARCHAR(255)
+                  name: amount
+                  type: DECIMAL
                   constraints:
                     nullable: false
               - column:
-                  name: password
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: VARCHAR(255)
-              - column:
-                  name: role
+                  name: type
                   type: VARCHAR(32)
                   constraints:
                     nullable: false
-
               - column:
-                  name: birth_date
+                  name: date
                   type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
               - column:
-                  name: documents_verified
-                  type: BOOLEAN
-                  defaultValue: false
+                  name: category_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
                   constraints:
                     nullable: false
 
@@ -61,34 +58,3 @@ databaseChangeLog:
                   defaultValue: '0'
                   constraints:
                     nullable: false
-
-        - createIndex:
-            tableName: users
-            indexName: idx_users_username
-            columns:
-              - column:
-                  name: username
-                  descending: false
-
-        - createIndex:
-            tableName: users
-            indexName: idx_users_email
-            columns:
-              - column:
-                  name: email
-                  descending: false
-
-        -  loadData:
-             tableName: users
-             file:  db/changelog/changes/data/users.csv
-             separator: ;
-             columns:
-               - column:
-                   header: username
-                   name: username
-               - column:
-                   header: password
-                   name: password
-               - column:
-                   header: role
-                   name: role

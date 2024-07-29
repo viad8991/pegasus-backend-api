@@ -10,6 +10,7 @@ plugins {
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
     kotlin("plugin.allopen")
+    kotlin("plugin.serialization") version "2.0.0"
 
     id("org.springframework.boot")
     id("io.spring.dependency-management")
@@ -34,6 +35,7 @@ dependencies {
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     /* DevTools */
     developmentOnly(Spring.boot.devTools)
@@ -57,8 +59,8 @@ dependencies {
 
     /* БД */
     implementation(Spring.boot.data.jpa)  // implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
+    implementation("org.liquibase:liquibase-core:_")
     runtimeOnly("org.postgresql:postgresql:_")
-    liquibaseRuntime("org.liquibase:liquibase-core:_")
 
     /* Test Depends */
     testImplementation(Kotlin.test)
@@ -70,8 +72,6 @@ dependencies {
     testImplementation("com.github.database-rider:rider-spring:_")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
 
-    /* FRONTEND */
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 }
 
 tasks {

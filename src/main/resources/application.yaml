@@ -11,22 +11,14 @@ spring:
 
   liquibase:
     default-schema: ${datasource.schema}
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
     parameters:
       schema: ${datasource.schema}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: validate  # none
 
-#  mustache:
-#    suffix: .html
-#    charset: UTF-8
-
-api:
-  yandex:
-    travel:
-      url: "https://whitelabel.travel.yandex-net.ru"
-      oAuthToken: "y0_AgAAAAAE1cObAAhpCwAAAAEFibDGAABlMyI06xpIU4DEAD3GK6OwBufW_w"
+security:
+  salt: 'my-32-char-secret-key-which-is-secure'

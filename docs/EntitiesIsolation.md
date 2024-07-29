@@ -53,3 +53,71 @@ public class UserResponse {
 
 ```
 
+```kotlin
+data class EntityRequest(val field1: String, val field2: Int)
+data class EntityDto(val field1: String, val field2: Int)
+data class Entity(val field1: String, val field2: Int)
+data class EntityResponse(val field1: String, val field2: Int)
+
+fun EntityRequest.toDto() = EntityDto(field1, field2)
+fun EntityDto.toEntity() = Entity(field1, field2)
+fun Entity.toDto() = EntityDto(field1, field2)
+fun EntityDto.toResponse() = EntityResponse(field1, field2)
+
+
+
+object EntityMapper {
+    fun toDto(request: EntityRequest) = EntityDto(request.field1, request.field2)
+    fun toEntity(dto: EntityDto) = Entity(dto.field1, dto.field2)
+    fun toDto(entity: Entity) = EntityDto(entity.field1, entity.field2)
+    fun toResponse(dto: EntityDto) = EntityResponse(dto.field1, dto.field2)
+}
+```
+
+```java
+public class EntityRequest {
+    private String field1;
+    private int field2;
+
+    // getters and setters
+}
+
+public class EntityDto {
+    private String field1;
+    private int field2;
+
+    // getters and setters
+}
+
+public class Entity {
+    private String field1;
+    private int field2;
+
+    // getters and setters
+}
+
+public class EntityResponse {
+    private String field1;
+    private int field2;
+
+    // getters and setters
+}
+
+public class Mapper {
+    public static EntityDto toDto(EntityRequest request) {
+        return new EntityDto(request.getField1(), request.getField2());
+    }
+
+    public static Entity toEntity(EntityDto dto) {
+        return new Entity(dto.getField1(), dto.getField2());
+    }
+
+    public static EntityDto toDto(Entity entity) {
+        return new EntityDto(entity.getField1(), entity.getField2());
+    }
+
+    public static EntityResponse toResponse(EntityDto dto) {
+        return new EntityResponse(dto.getField1(), dto.getField2());
+    }
+}
+```

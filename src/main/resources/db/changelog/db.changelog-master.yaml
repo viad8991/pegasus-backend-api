@@ -1,3 +1,10 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changes/create-user-table.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/create-category-table.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/create-transaction-table.yaml
+      relativeToChangelogFile: false

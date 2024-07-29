@@ -1,16 +1,20 @@
 datasource:
-  host: localhost
+  host: 'localhost:5432'
   username: user
   password: password
   schema: public
   database: db
 
+spring:
+  jpa:
+    show-sql: true
+
 logging:
   level:
     org:
       springframework:
-        web: DEBUG
-        security: DEBUG
+        web: INFO
+        security: INFO
 
       pegasus:
         backendapi: INFO
