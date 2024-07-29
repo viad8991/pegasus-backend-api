@@ -1,0 +1,5 @@
+[submodule "frontend"]
+path = frontend
+url = git@github.com:viad8991/pegasus-budget-tracker-frontend.git
+branch = dev
+active = false
