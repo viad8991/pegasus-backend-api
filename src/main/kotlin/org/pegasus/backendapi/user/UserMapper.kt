@@ -1,6 +1,5 @@
 package org.pegasus.backendapi.user
 
-import org.pegasus.backendapi.transaction.model.UserRequest
 import org.pegasus.backendapi.user.model.Role
 import org.pegasus.backendapi.user.model.User
 import org.pegasus.backendapi.user.model.UserDto
@@ -8,10 +7,6 @@ import org.pegasus.backendapi.user.model.UserResponse
 
 class UserMapper {
     companion object {
-
-        fun toDto(userRequest: UserRequest) = UserDto(
-            userRequest.username,
-        )
 
         fun toEntity(dto: UserDto) = User(
             username = dto.username,

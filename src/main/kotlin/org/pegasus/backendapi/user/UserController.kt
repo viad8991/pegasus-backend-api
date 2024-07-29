@@ -2,12 +2,9 @@ package org.pegasus.backendapi.user
 
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.security.JwtService
-import org.pegasus.backendapi.transaction.model.UserRequest
 import org.pegasus.backendapi.user.model.User
-import org.pegasus.backendapi.user.model.UserResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -27,11 +24,6 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
                 )
             )
         )
-    }
-
-    @PostMapping
-    fun create(@RequestBody request: UserRequest): ResponseEntity<UserResponse> {
-        return ResponseEntity.ok(UserMapper.toResponse(userService.create(UserMapper.toDto(request))))
     }
 
     data class LoginRequest(
