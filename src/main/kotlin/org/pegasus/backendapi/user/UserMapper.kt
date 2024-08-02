@@ -16,11 +16,25 @@ class UserMapper {
         )
 
         fun toDto(entity: User) = UserDto(
-            entity.username
+            entity.id,
+            entity.username,
+            entity.email,
+            entity.birthDate,
+            entity.documentsVerified,
+            entity.update,
+            entity.created,
+            entity.role.ru
         )
 
         fun toResponse(dto: UserDto) = UserResponse(
-            dto.username
+            dto.id,
+            dto.username,
+            dto.email,
+            dto.birthDate,
+            dto.documentsVerified,
+            dto.update,
+            dto.created,
+            dto.ru
         )
 
     }

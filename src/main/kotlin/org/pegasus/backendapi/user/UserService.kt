@@ -12,8 +12,8 @@ class UserService(private val userRepository: UserRepository) : UserDetailsServi
 
     private val log = logger()
 
-    override fun loadUserByUsername(username: String): UserDetails? {
-        return userRepository.findByUsername(username)
+    override fun loadUserByUsername(username: String): UserDetails {
+        return userRepository.findByUsername(username) ?: throw BadCredentialsException("unauthorized request")
     }
 
     fun currentUser(): User {

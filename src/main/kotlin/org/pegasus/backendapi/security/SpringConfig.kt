@@ -9,13 +9,29 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.bind.annotation.RequestMethod.*
 import org.springframework.web.filter.OncePerRequestFilter
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 val securityInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
 
     bean<JwtService>()
 
     bean<OncePerRequestFilter> { JwtRequestFilter(ref(), ref()) }
+
+    bean<WebMvcConfigurer> {
+        object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                val requestMethodNames = listOf(GET.name, POST.name, PUT.name, DELETE.name).toTypedArray()
+
+                registry
+                    .addMapping("/**")
+                    .allowedOrigins("http://localhost:3000")
+                    .allowedMethods(*requestMethodNames)
+            }
+        }
+    }
 
     bean<SecurityFilterChain> {
         val jwtRequestFilter = ref<JwtRequestFilter>()

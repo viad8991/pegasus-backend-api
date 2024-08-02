@@ -5,6 +5,7 @@ import org.pegasus.backendapi.security.JwtService
 import org.pegasus.backendapi.user.model.UserResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -23,7 +24,9 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
         return if (user == null) {
             ResponseEntity.notFound().build()
         } else {
-            ResponseEntity.ok(LoginResponse(jwtService.generateToken(user)))
+            val jwt = jwtService.generateToken(user)
+            val response = LoginResponse(user.id, jwt, user.username)
+            ResponseEntity.ok(response)
         }
     }
 
@@ -33,7 +36,9 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
     )
 
     data class LoginResponse(
-        val token: String
+        val id: UUID,
+        val token: String,
+        val username: String
     )
 
 }
