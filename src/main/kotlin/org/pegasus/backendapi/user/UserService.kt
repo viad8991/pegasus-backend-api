@@ -7,6 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import java.util.*
 
 class UserService(private val userRepository: UserRepository) : UserDetailsService {
 
@@ -16,17 +17,17 @@ class UserService(private val userRepository: UserRepository) : UserDetailsServi
         return userRepository.findByUsername(username) ?: throw BadCredentialsException("unauthorized request")
     }
 
-    fun currentUser(): User {
+    fun currentUser(): UserDto {
         val user: Any? = SecurityContextHolder.getContext().authentication.principal
         return if (user == null || user !is User) {
             throw BadCredentialsException("unauthorized request")
         } else {
-            user
+            UserMapper.toDto(user)
         }
     }
 
-    fun find(username: String, password: String): User? {
-        return userRepository.findByUsername(username)
+    fun find(username: String, password: String): UserDto? {
+        return userRepository.findByUsername(username)?.let { UserMapper.toDto(it) }
     }
 
     fun getAllUsers(): List<UserDto> {
@@ -36,6 +37,11 @@ class UserService(private val userRepository: UserRepository) : UserDetailsServi
 
     fun create(userDto: UserDto): UserDto {
         return UserMapper.toDto(userRepository.save(UserMapper.toEntity(userDto)))
+    }
+
+    fun findUser(id: UUID): UserDto? {
+        val foundUser = userRepository.findById(id)
+        return if (foundUser.isPresent) UserMapper.toDto(foundUser.get()) else null
     }
 
 }

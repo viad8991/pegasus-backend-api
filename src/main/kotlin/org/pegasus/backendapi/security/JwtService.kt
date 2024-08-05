@@ -12,6 +12,15 @@ class JwtService(private val settings: SecuritySettings) {
 
     private val secretKey = Keys.hmacShaKeyFor(settings.salt.toByteArray())
 
+    fun generateToken(subject: String): String {
+        return Jwts.builder()
+            .subject(subject)
+            .issuedAt(Date(System.currentTimeMillis()))
+            .expiration(Date(System.currentTimeMillis() + settings.expiration))
+            .signWith(secretKey)
+            .compact()
+    }
+
     fun generateToken(userDetails: UserDetails): String {
         return Jwts.builder()
             .subject(userDetails.username)

@@ -13,19 +13,34 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
 
     private val log = logger()
 
+    @GetMapping("/{id}")
+    fun user(@PathVariable(required = false) id: UUID?): ResponseEntity<UserResponse> {
+        val foundUser = if (id == null) userService.currentUser() else userService.findUser(id)
+
+        return if (foundUser == null) {
+            ResponseEntity.noContent().build()
+        } else {
+            ResponseEntity.ok(UserMapper.toResponse(foundUser))
+        }
+    }
+
     @GetMapping
-    fun getAll(): List<UserResponse> = userService.getAllUsers()
+    fun all(): ResponseEntity<List<UserResponse>> = userService.getAllUsers()
         .map { userDto -> UserMapper.toResponse(userDto) }
+        .let { ResponseEntity.ok(it) }
+        .also {
+            log.info { it }
+        }
 
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
         log.info { "new request $loginRequest" }
-        val user = userService.find(loginRequest.username, loginRequest.password)
-        return if (user == null) {
+        val userDto = userService.find(loginRequest.username, loginRequest.password)
+        return if (userDto == null) {
             ResponseEntity.notFound().build()
         } else {
-            val jwt = jwtService.generateToken(user)
-            val response = LoginResponse(user.id, jwt, user.username)
+            val jwt = jwtService.generateToken(userDto.username)
+            val response = LoginResponse(jwt, UserMapper.toResponse(userDto))
             ResponseEntity.ok(response)
         }
     }
@@ -36,9 +51,8 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
     )
 
     data class LoginResponse(
-        val id: UUID,
         val token: String,
-        val username: String
+        val user: UserResponse
     )
 
 }

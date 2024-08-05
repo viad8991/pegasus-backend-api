@@ -7,9 +7,10 @@ data class UserResponse(
     val id: UUID,
     val username: String,
     val email: String?,
+    val isActive: Boolean,
+    val verified: Boolean,
+    val isAdmin: Boolean,
+    val hasFamily: Boolean,
     val birthDate: Instant?,
-    val documentsVerified: Boolean,
-    val update: Instant,
     val created: Instant,
-    val ru: String
 )

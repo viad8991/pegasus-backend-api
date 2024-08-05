@@ -11,5 +11,6 @@ data class UserDto(
     val documentsVerified: Boolean,
     val update: Instant,
     val created: Instant,
-    val ru: String
+    val role: Role,
+    val active: Boolean
 )

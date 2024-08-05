@@ -16,26 +16,27 @@ class UserMapper {
         )
 
         fun toDto(entity: User) = UserDto(
-            entity.id,
-            entity.username,
-            entity.email,
-            entity.birthDate,
-            entity.documentsVerified,
-            entity.update,
-            entity.created,
-            entity.role.ru
+            id = entity.id,
+            username = entity.username,
+            email = entity.email,
+            birthDate = entity.birthDate,
+            documentsVerified = entity.documentsVerified,
+            update = entity.update,
+            created = entity.created,
+            active = entity.isEnabled,
+            role = entity.role
         )
 
         fun toResponse(dto: UserDto) = UserResponse(
-            dto.id,
-            dto.username,
-            dto.email,
-            dto.birthDate,
-            dto.documentsVerified,
-            dto.update,
-            dto.created,
-            dto.ru
+            id = dto.id,
+            username = dto.username,
+            email = dto.email,
+            isActive = dto.active,
+            verified = dto.documentsVerified,
+            isAdmin = dto.role == Role.ADMIN,
+            hasFamily = false,
+            birthDate = dto.birthDate,
+            created = dto.created
         )
-
     }
 }
