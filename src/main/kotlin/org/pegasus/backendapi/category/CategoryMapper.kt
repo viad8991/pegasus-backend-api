@@ -2,6 +2,7 @@ package org.pegasus.backendapi.category
 
 import org.pegasus.backendapi.category.model.Category
 import org.pegasus.backendapi.category.model.CategoryDto
+import org.pegasus.backendapi.category.model.CategoryRequest
 import org.pegasus.backendapi.category.model.CategoryResponse
 
 class CategoryMapper {
@@ -14,11 +15,25 @@ class CategoryMapper {
         )
 
         fun toDto(entity: Category) = CategoryDto(
-            entity.id, entity.name, entity.description
+            id = entity.id,
+            name = entity.name,
+            description = entity.description,
+            created = entity.created,
+            update = entity.update
         )
 
         fun toResponse(dto: CategoryDto) = CategoryResponse(
-            dto.id, dto.name, dto.description
+            id = dto.id,
+            name = dto.name,
+            description = dto.description,
+            created = dto.created,
+            update = dto.update,
+        )
+
+        fun toDto(request: CategoryRequest): CategoryDto = CategoryDto(
+            id = null,
+            name = request.name,
+            description = request.description
         )
 
     }

@@ -13,9 +13,9 @@ data class Category(
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID = UUID.randomUUID(),
 
-    val name: String,
+    var name: String,
 
-    val description: String? = null,
+    var description: String? = null,
 
     val created: Instant = Instant.now(),
 
