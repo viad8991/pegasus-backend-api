@@ -37,12 +37,20 @@ databaseChangeLog:
                   name: birth_date
                   type: TIMESTAMP WITH TIME ZONE
               - column:
+                  name: family_id
+                  type: UUID
+              - column:
                   name: documents_verified
                   type: BOOLEAN
-                  defaultValue: false
+                  defaultValue: 'false'
                   constraints:
                     nullable: false
-
+              - column:
+                  name: enable
+                  type: BOOLEAN
+                  defaultValue: 'true'
+                  constraints:
+                    nullable: false
               - column:
                   name: created
                   type: TIMESTAMP WITH TIME ZONE

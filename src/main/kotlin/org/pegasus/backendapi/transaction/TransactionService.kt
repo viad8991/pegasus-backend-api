@@ -1,42 +1,38 @@
 package org.pegasus.backendapi.transaction
 
 import org.apache.logging.log4j.kotlin.logger
+import org.pegasus.backendapi.category.exception.CategoryNotFoundException
+import org.pegasus.backendapi.category.service.CategoryInternalService
 import org.pegasus.backendapi.transaction.model.TransactionDto
-import org.pegasus.backendapi.transaction.model.Transaction
-import org.pegasus.backendapi.category.CategoryRepository
-import org.pegasus.backendapi.user.UserMapper
-import org.pegasus.backendapi.user.model.UserDto
+import org.pegasus.backendapi.user.service.UserInternalService
 import org.springframework.stereotype.Service
 
 @Service
 class TransactionService(
     val transactionRepository: TransactionRepository,
-    val categoryRepository: CategoryRepository
+    val categoryService: CategoryInternalService,
+    val userService: UserInternalService
 ) {
 
     private val log = logger()
 
-    fun getAllTransactions(): List<Transaction> = transactionRepository.findAll()
+    fun list(): List<TransactionDto> {
+        val user = userService.currentUser()
 
-    fun create(transactionDto: TransactionDto, user: UserDto): TransactionDto {
-        if (transactionDto.id != null) {
-            throw RuntimeException("exist")
-        }
-        val category = categoryRepository.findById(transactionDto.categoryId).orElseThrow {
-            throw RuntimeException("category error")
-        }
+        val transactions = transactionRepository.findAllByUser(user)
+        return transactions.map { transaction -> TransactionMapper.toDto(transaction) }
+    }
 
-        val transaction = Transaction(
-            type = transactionDto.type,
-            amount = transactionDto.amount,
-            category = category,
-            user = UserMapper.toEntity(user)
-        )
+    fun create(transactionDto: TransactionDto): TransactionDto {
+        log.info { "new transaction $transactionDto" }
+        val categoryId = transactionDto.category?.id ?: throw CategoryNotFoundException()
 
-        log.info { "transaction $transaction" }
+        val user = userService.currentUser()
+        val category = categoryService.findById(categoryId)
+        val transaction = TransactionMapper.toEntity(transactionDto, category, user)
 
         transactionRepository.save(transaction)
-
+        log.info { "Creating transaction for user ${user.id}: $transaction" }
         return TransactionMapper.toDto(transaction)
     }
 

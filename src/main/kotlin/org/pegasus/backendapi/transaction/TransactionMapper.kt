@@ -1,5 +1,6 @@
 package org.pegasus.backendapi.transaction
 
+import org.pegasus.backendapi.category.CategoryMapper
 import org.pegasus.backendapi.category.model.Category
 import org.pegasus.backendapi.transaction.model.Transaction
 import org.pegasus.backendapi.transaction.model.TransactionDto
@@ -10,12 +11,11 @@ import org.pegasus.backendapi.user.model.User
 class TransactionMapper {
     companion object {
 
-        fun toDto(transactionRequest: TransactionRequest) = TransactionDto(
-            transactionRequest.id,
-            transactionRequest.type,
-            transactionRequest.amount,
-            transactionRequest.date,
-            transactionRequest.categoryId,
+        fun toDto(request: TransactionRequest) = TransactionDto(
+            id = null,
+            type = request.type,
+            amount = request.amount,
+            category = request.category?.let { CategoryMapper.toDto(it) },
         )
 
         fun toEntity(dto: TransactionDto, category: Category, user: User) = Transaction(
@@ -30,15 +30,15 @@ class TransactionMapper {
             entity.type,
             entity.amount,
             entity.date,
-            entity.category.id
+            CategoryMapper.toDto(entity.category)
         )
 
         fun toResponse(dto: TransactionDto) = TransactionResponse(
-            dto.id,
-            dto.type,
-            dto.amount,
-            dto.date,
-            dto.categoryId
+            id = dto.id,
+            type =  dto.type,
+            amount =  dto.amount,
+            date =  dto.date,
+            category = dto.category?.let { CategoryMapper.toResponse(it) }
         )
 
     }

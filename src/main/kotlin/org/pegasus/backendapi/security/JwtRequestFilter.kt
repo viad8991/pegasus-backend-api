@@ -5,7 +5,8 @@ import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.apache.logging.log4j.kotlin.logger
-import org.pegasus.backendapi.user.UserService
+import org.pegasus.backendapi.user.service.UserInternalService
+import org.pegasus.backendapi.user.service.UserService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
@@ -13,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 
 class JwtRequestFilter(
-    private val userService: UserService,
+    private val userService: UserInternalService,
     private val jwtService: JwtService
 ) : OncePerRequestFilter() {
 
@@ -28,8 +29,8 @@ class JwtRequestFilter(
         filterChain: FilterChain
     ) {
         val jwt: String? = request.getHeader(authorizationHeaderName)
+        log.info { "jwt $jwt" }
         val username: String? = jwt?.let { jwtService.extractUsername(jwt) }
-        log.info { "username: $username. with jwt: $jwt" }
 
         if (username != null && SecurityContextHolder.getContext().authentication == null) {
             val userDetails = userService.loadUserByUsername(username)

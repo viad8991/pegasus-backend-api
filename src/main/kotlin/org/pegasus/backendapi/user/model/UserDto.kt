@@ -12,5 +12,6 @@ data class UserDto(
     val update: Instant,
     val created: Instant,
     val role: Role,
-    val active: Boolean
+    val active: Boolean,
+    val family: UUID?
 )

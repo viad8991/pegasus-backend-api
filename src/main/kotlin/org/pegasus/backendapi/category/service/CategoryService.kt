@@ -1,7 +1,9 @@
-package org.pegasus.backendapi.category
+package org.pegasus.backendapi.category.service
 
 import jakarta.transaction.Transactional
 import org.apache.logging.log4j.kotlin.logger
+import org.pegasus.backendapi.category.CategoryMapper
+import org.pegasus.backendapi.category.CategoryRepository
 import org.pegasus.backendapi.category.model.CategoryDto
 import org.springframework.stereotype.Service
 import java.util.*

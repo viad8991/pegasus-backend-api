@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-families-table-20240807
+      author: vshevchenko
+      changes:
+        - createTable:
+            tableName: families
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValue: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValue: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValue: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValue: '0'
+                  constraints:
+                    nullable: false

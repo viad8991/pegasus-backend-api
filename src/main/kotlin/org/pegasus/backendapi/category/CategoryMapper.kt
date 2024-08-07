@@ -31,7 +31,7 @@ class CategoryMapper {
         )
 
         fun toDto(request: CategoryRequest): CategoryDto = CategoryDto(
-            id = null,
+            id = request.id,
             name = request.name,
             description = request.description
         )

@@ -24,7 +24,8 @@ class UserMapper {
             update = entity.update,
             created = entity.created,
             active = entity.isEnabled,
-            role = entity.role
+            role = entity.role,
+            family = entity.family?.id,
         )
 
         fun toResponse(dto: UserDto) = UserResponse(
@@ -34,7 +35,7 @@ class UserMapper {
             isActive = dto.active,
             verified = dto.documentsVerified,
             isAdmin = dto.role == Role.ADMIN,
-            hasFamily = false,
+            hasFamily = dto.family != null,
             birthDate = dto.birthDate,
             created = dto.created
         )

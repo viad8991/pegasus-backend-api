@@ -3,6 +3,7 @@ package org.pegasus.backendapi.category
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.category.model.CategoryRequest
 import org.pegasus.backendapi.category.model.CategoryResponse
+import org.pegasus.backendapi.category.service.CategoryService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*

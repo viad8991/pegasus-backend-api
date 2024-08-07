@@ -5,7 +5,7 @@ import java.util.*
 
 data class CategoryDto(
 
-    val id: UUID?,
+    val id: UUID? = null,
 
     val name: String,
 

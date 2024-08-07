@@ -1,6 +1,7 @@
 package org.pegasus.backendapi.security
 
-import org.pegasus.backendapi.user.UserService
+import org.pegasus.backendapi.user.service.UserInternalService
+import org.pegasus.backendapi.user.service.UserService
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
@@ -35,14 +36,15 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
 
     bean<SecurityFilterChain> {
         val jwtRequestFilter = ref<JwtRequestFilter>()
-        val userService = ref<UserService>()
+        val userService = ref<UserInternalService>()
         val httpSecurity = ref<HttpSecurity>()
 
         httpSecurity
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers("/api/v1/user/login").anonymous()
-                    .requestMatchers("/api/v1/user").authenticated()
+                    .requestMatchers("/api/v1/auth").anonymous()
+
+                    .requestMatchers("/api/v1/user/**").authenticated()
                     .requestMatchers("/api/v1/transaction").authenticated()
 
                     .requestMatchers("/**").permitAll()

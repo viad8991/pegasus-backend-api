@@ -2,6 +2,7 @@ package org.pegasus.backendapi.user.model
 
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
+import org.pegasus.backendapi.family.model.Family
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -29,6 +30,11 @@ class User(
 
     var documentsVerified: Boolean = false,
 
+    var enable: Boolean = true,
+
+    @ManyToOne
+    var family: Family? = null,
+
     val created: Instant = Instant.now(),
 
     @UpdateTimestamp
@@ -53,7 +59,7 @@ class User(
 
     override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun isEnabled(): Boolean = true
+    override fun isEnabled(): Boolean = enable
 
     override fun toString(): String {
         return "${this.javaClass.simpleName}(id=$id, username=$username)"
