@@ -14,7 +14,7 @@ logging:
     org:
       springframework:
         web: INFO
-        security: DEBUG
+        security: INFO
 
       pegasus:
         backendapi: INFO

@@ -1,4 +1,4 @@
-package org.pegasus.backendapi.transaction.model
+package org.pegasus.backendapi.category.model
 
 enum class TransactionType {
     INCOME, EXPENSE

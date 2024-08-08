@@ -15,6 +15,9 @@ data class Category(
 
     var name: String,
 
+    @Enumerated(EnumType.STRING)
+    var type: TransactionType,
+
     var description: String? = null,
 
     val created: Instant = Instant.now(),

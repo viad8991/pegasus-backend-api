@@ -20,11 +20,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: type
-                  type: VARCHAR(32)
-                  constraints:
-                    nullable: false
-              - column:
                   name: date
                   type: TIMESTAMP WITH TIME ZONE
                   constraints:

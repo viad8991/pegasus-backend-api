@@ -20,6 +20,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: type
+                  type: VARCHAR(8)
+                  constraints:
+                    nullable: false
+              - column:
                   name: description
                   type: TEXT
 
@@ -50,3 +55,6 @@ databaseChangeLog:
                - column:
                    header: name
                    name: name
+               - column:
+                   header: type
+                   name: type

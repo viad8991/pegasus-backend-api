@@ -1,7 +1,6 @@
 package org.pegasus.backendapi.transaction
 
-import org.pegasus.backendapi.transaction.model.TransactionDto
-import org.pegasus.backendapi.transaction.model.TransactionRequest
+import org.pegasus.backendapi.transaction.model.CreateRequest
 import org.pegasus.backendapi.transaction.model.TransactionResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,8 +20,8 @@ class TransactionController(val transactionService: TransactionService) {
     }
 
     @PostMapping
-    fun create(@RequestBody transactionRequest: TransactionRequest): ResponseEntity<TransactionResponse> {
-        val transactionRequestDto = TransactionMapper.toDto(transactionRequest)
+    fun create(@RequestBody request: CreateRequest): ResponseEntity<TransactionResponse> {
+        val transactionRequestDto = TransactionMapper.toDto(request)
         val transactionResponseDto = transactionService.create(transactionRequestDto)
         return ResponseEntity.ok(TransactionMapper.toResponse(transactionResponseDto))
     }

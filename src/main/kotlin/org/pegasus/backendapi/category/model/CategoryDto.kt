@@ -9,6 +9,8 @@ data class CategoryDto(
 
     val name: String,
 
+    val type: TransactionType,
+
     val description: String?,
 
     val update: Instant? = null,

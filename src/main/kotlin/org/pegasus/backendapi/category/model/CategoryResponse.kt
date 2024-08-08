@@ -9,6 +9,8 @@ data class CategoryResponse(
 
     val name: String,
 
+    val type: TransactionType,
+
     val description: String?,
 
     val created: Instant?,

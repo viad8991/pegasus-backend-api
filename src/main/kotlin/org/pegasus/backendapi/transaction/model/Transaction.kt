@@ -18,14 +18,11 @@ data class Transaction(
 
     val amount: BigDecimal,
 
-    @Enumerated(EnumType.STRING)
-    val type: TransactionType,
-
-    @ManyToOne
-    val category: Category,
-
     @ManyToOne
     val user: User,
+
+    @ManyToOne
+    val category: Category? = null,
 
     val date: Instant = Instant.now(),
 
