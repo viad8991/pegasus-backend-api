@@ -20,8 +20,8 @@ class UserController(
 
     private val log = logger()
 
-    @GetMapping("/{id}")
-    fun user(@PathVariable(required = false) id: UUID?): ResponseEntity<UserResponse> {
+    @GetMapping("/", "/{id}")
+    fun user(@PathVariable(required = false) id: UUID? = null): ResponseEntity<UserResponse> {
         val foundUser = if (id == null) UserMapper.toDto(userInternalService.currentUser()) else userService.findUser(id)
 
         return if (foundUser == null) {
@@ -31,7 +31,7 @@ class UserController(
         }
     }
 
-    @GetMapping
+    @GetMapping("/list")
     fun all(): ResponseEntity<List<UserResponse>> = userService.getAllUsers()
         .map { userDto -> UserMapper.toResponse(userDto) }
         .let { ResponseEntity.ok(it) }

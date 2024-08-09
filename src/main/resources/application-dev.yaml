@@ -13,8 +13,8 @@ logging:
   level:
     org:
       springframework:
-        web: INFO
-        security: INFO
+        web: DEBUG
+        security: DEBUG
 
       pegasus:
         backendapi: INFO

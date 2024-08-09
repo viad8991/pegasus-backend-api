@@ -18,7 +18,6 @@ class AuthController(val userService: UserService, val jwtService: JwtService) {
 
     @PostMapping
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        log.info { "new request $loginRequest" }
         val userDto = userService.find(loginRequest.username, loginRequest.password)
         return if (userDto == null) {
             ResponseEntity.notFound().build()

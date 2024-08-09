@@ -37,7 +37,6 @@ class CategoryController(val categoryService: CategoryService) {
 
     @PostMapping("/{id}")
     fun update(@PathVariable id: UUID, @RequestBody request: CategoryCreateRequest): ResponseEntity<CategoryResponse> {
-        log.info { "АААААА id $id, req: $request" }
         val category = categoryService.update(id, CategoryMapper.toDto(request))
         return if (category == null) {
             ResponseEntity.noContent().build()

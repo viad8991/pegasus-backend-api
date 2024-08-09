@@ -5,11 +5,12 @@ import org.pegasus.backendapi.user.UserMapper
 import org.pegasus.backendapi.user.UserRepository
 import org.pegasus.backendapi.user.model.User
 import org.pegasus.backendapi.user.model.UserDto
-import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.core.context.SecurityContextHolder
 import java.util.*
 
-class UserService(private val userRepository: UserRepository) {
+class UserService(
+    private val internalService: UserInternalService,
+    private val userRepository: UserRepository
+) {
 
     private val log = logger()
 
@@ -29,6 +30,10 @@ class UserService(private val userRepository: UserRepository) {
     fun findUser(id: UUID): UserDto? {
         val foundUser = userRepository.findById(id)
         return if (foundUser.isPresent) UserMapper.toDto(foundUser.get()) else null
+    }
+
+    fun fetchCurrentUserData(): UserDto {
+        return UserMapper.toDto(internalService.currentUser())
     }
 
 }
