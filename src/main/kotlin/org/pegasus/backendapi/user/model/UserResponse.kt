@@ -1,6 +1,6 @@
 package org.pegasus.backendapi.user.model
 
-import org.pegasus.backendapi.utils.Response
+import org.pegasus.backendapi.utils.IResponse
 import java.time.Instant
 import java.util.*
 
@@ -14,4 +14,4 @@ data class UserResponse(
     val hasFamily: Boolean,
     val birthDate: Instant?,
     val created: Instant,
-) : Response
+) : IResponse

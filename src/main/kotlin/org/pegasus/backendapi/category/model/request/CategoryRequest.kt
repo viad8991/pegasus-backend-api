@@ -1,7 +1,7 @@
 package org.pegasus.backendapi.category.model.request
 
 import org.pegasus.backendapi.category.model.TransactionType
-import org.pegasus.backendapi.utils.Request
+import org.pegasus.backendapi.utils.IRequest
 import java.util.*
 
 data class CategoryRequest(
@@ -12,6 +12,6 @@ data class CategoryRequest(
 
     val type: TransactionType,
 
-    val description: String?
+    val description: String? = null
 
-) : Request
+) : IRequest

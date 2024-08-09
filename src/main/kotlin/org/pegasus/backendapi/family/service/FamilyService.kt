@@ -9,14 +9,13 @@ import org.pegasus.backendapi.family.model.dto.FamilyDto
 import org.pegasus.backendapi.family.model.dto.MemberTransactionDto
 import org.pegasus.backendapi.family.model.entity.Family
 import org.pegasus.backendapi.transaction.model.TransactionMapper
+import org.pegasus.backendapi.transaction.service.TransactionInternalService
 import org.pegasus.backendapi.user.UserMapper
 import org.pegasus.backendapi.user.service.UserInternalService
-import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service
 class FamilyService(
-    val transactionService: FamilyInternalService,
+    val transactionService: TransactionInternalService,
     val familyRepository: FamilyRepository,
     val userService: UserInternalService
 ) {
@@ -51,7 +50,7 @@ class FamilyService(
         val transactions = transactionService.getLatestForUsers(members)
 
         return members
-            .map { user -> user to transactions.firstOrNull { transaction -> transaction.user == user }}
+            .map { user -> user to transactions.firstOrNull { transaction -> transaction.user == user } }
             .map { pair ->
                 MemberTransactionDto(UserMapper.toDto(pair.first), pair.second?.let { TransactionMapper.toDto(it) })
             }.toSet()
@@ -61,7 +60,8 @@ class FamilyService(
         val currentUser = userService.currentUser()
 
         val familyId = currentUser.family?.id ?: throw FamilyNotExistException(currentUser.username)
-        val family = familyRepository.findById(familyId).orElseThrow { throw FamilyNotExistException(currentUser.username) }
+        val family =
+            familyRepository.findById(familyId).orElseThrow { throw FamilyNotExistException(currentUser.username) }
 
         val familyMembers = family.members.filter { user -> user.family?.id == currentUser.family?.id }.toSet()
         val transactionByUser = transactionService.getLatestForUsers(familyMembers)

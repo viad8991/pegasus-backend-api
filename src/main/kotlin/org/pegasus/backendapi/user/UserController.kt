@@ -22,7 +22,8 @@ class UserController(
 
     @GetMapping("/", "/{id}")
     fun user(@PathVariable(required = false) id: UUID? = null): ResponseEntity<UserResponse> {
-        val foundUser = if (id == null) UserMapper.toDto(userInternalService.currentUser()) else userService.findUser(id)
+        val foundUser =
+            if (id == null) UserMapper.toDto(userInternalService.currentUser()) else userService.findUser(id)
 
         return if (foundUser == null) {
             ResponseEntity.noContent().build()

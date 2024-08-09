@@ -29,4 +29,4 @@ data class Category(
     @Version
     val version: Long = 0
 
-): IEntity
+) : IEntity

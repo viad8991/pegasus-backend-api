@@ -1,18 +1,17 @@
-package org.pegasus.backendapi.transaction
+package org.pegasus.backendapi.transaction.service
 
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.category.exception.CategoryNotFoundException
 import org.pegasus.backendapi.category.service.CategoryInternalService
+import org.pegasus.backendapi.transaction.TransactionRepository
 import org.pegasus.backendapi.transaction.model.TransactionDto
 import org.pegasus.backendapi.transaction.model.TransactionMapper
 import org.pegasus.backendapi.user.service.UserInternalService
-import org.springframework.stereotype.Service
 
-@Service
 class TransactionService(
-    val transactionRepository: TransactionRepository,
-    val categoryService: CategoryInternalService,
-    val userService: UserInternalService
+    private val transactionRepository: TransactionRepository,
+    private val categoryService: CategoryInternalService,
+    private val userService: UserInternalService
 ) {
 
     private val log = logger()

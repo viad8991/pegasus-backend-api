@@ -1,5 +1,5 @@
 package org.pegasus.backendapi.user.model
 
-import org.pegasus.backendapi.utils.Request
+import org.pegasus.backendapi.utils.IRequest
 
-data class UserRequest(val username: String) : Request
+data class UserRequest(val username: String) : IRequest

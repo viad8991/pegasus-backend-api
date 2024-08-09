@@ -1,7 +1,10 @@
 package org.pegasus.backendapi
 
+import org.pegasus.backendapi.category.categoryInitializer
+import org.pegasus.backendapi.family.familyInitializer
 import org.pegasus.backendapi.security.SecuritySettings
 import org.pegasus.backendapi.security.securityInitializer
+import org.pegasus.backendapi.transaction.transactionInitializer
 import org.pegasus.backendapi.user.userInitializer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -24,6 +27,11 @@ fun main(args: Array<String>) {
 object AppInitializer : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
         userInitializer.initialize(applicationContext)
+
         securityInitializer.initialize(applicationContext)
+
+        categoryInitializer.initialize(applicationContext)
+        familyInitializer.initialize(applicationContext)
+        transactionInitializer.initialize(applicationContext)
     }
 }

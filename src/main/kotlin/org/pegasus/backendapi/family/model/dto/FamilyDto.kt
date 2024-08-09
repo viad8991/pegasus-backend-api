@@ -1,7 +1,7 @@
 package org.pegasus.backendapi.family.model.dto
 
 import org.pegasus.backendapi.user.model.UserDto
-import org.pegasus.backendapi.utils.Dto
+import org.pegasus.backendapi.utils.IDto
 import java.time.Instant
 import java.util.*
 
@@ -10,4 +10,4 @@ class FamilyDto(
     val members: List<UserDto>,
     val created: Instant,
     val update: Instant
-) : Dto
+) : IDto

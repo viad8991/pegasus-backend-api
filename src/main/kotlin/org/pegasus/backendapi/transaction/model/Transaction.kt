@@ -31,4 +31,5 @@ data class Transaction(
 
     @Version
     val version: Long = 0
+
 )
