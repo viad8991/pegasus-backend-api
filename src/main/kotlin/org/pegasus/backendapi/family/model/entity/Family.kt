@@ -1,8 +1,9 @@
-package org.pegasus.backendapi.family.model
+package org.pegasus.backendapi.family.model.entity
 
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
 import org.pegasus.backendapi.user.model.User
+import org.pegasus.backendapi.utils.IEntity
 import java.time.Instant
 import java.util.*
 
@@ -25,4 +26,4 @@ class Family(
     @Version
     val version: Long = 0
 
-)
+) : IEntity

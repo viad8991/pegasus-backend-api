@@ -18,7 +18,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: validate  # none
+      ddl-auto: validate
 
 security:
   salt: 'my-32-char-secret-key-which-is-secure'

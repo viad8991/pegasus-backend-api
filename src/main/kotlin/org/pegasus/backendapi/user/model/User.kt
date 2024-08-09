@@ -2,7 +2,8 @@ package org.pegasus.backendapi.user.model
 
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
-import org.pegasus.backendapi.family.model.Family
+import org.pegasus.backendapi.family.model.entity.Family
+import org.pegasus.backendapi.utils.IEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -32,7 +33,7 @@ class User(
 
     var enable: Boolean = true,
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     var family: Family? = null,
 
     val created: Instant = Instant.now(),
@@ -43,7 +44,7 @@ class User(
     @Version
     val version: Long = 0
 
-) : UserDetails {
+) : IEntity, UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableSetOf(SimpleGrantedAuthority(role.name))

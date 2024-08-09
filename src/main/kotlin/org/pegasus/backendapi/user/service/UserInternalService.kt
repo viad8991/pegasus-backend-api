@@ -1,7 +1,7 @@
 package org.pegasus.backendapi.user.service
 
 import jakarta.transaction.Transactional
-import org.pegasus.backendapi.family.model.Family
+import org.pegasus.backendapi.family.model.entity.Family
 import org.pegasus.backendapi.user.UserRepository
 import org.pegasus.backendapi.user.model.User
 import org.springframework.security.authentication.BadCredentialsException

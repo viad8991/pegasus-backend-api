@@ -13,4 +13,8 @@ interface TransactionRepository : JpaRepository<Transaction, UUID> {
     @Query("SELECT t FROM Transaction t WHERE t.user = :user")
     fun findAllByUser(user: User) : Set<Transaction>
 
+
+    @Query("SELECT t FROM Transaction t WHERE t.user IN :users")
+    fun findAllByUsers(users: Set<User>) : Set<Transaction>
+
 }

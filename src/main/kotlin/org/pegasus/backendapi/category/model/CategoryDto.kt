@@ -1,5 +1,6 @@
 package org.pegasus.backendapi.category.model
 
+import org.pegasus.backendapi.utils.Dto
 import java.time.Instant
 import java.util.*
 
@@ -17,4 +18,4 @@ data class CategoryDto(
 
     val created: Instant? = null
 
-)
+) : Dto

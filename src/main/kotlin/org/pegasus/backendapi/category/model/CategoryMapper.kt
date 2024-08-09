@@ -1,22 +1,20 @@
-package org.pegasus.backendapi.category
+package org.pegasus.backendapi.category.model
 
-import org.pegasus.backendapi.category.model.Category
-import org.pegasus.backendapi.category.model.CategoryDto
-import org.pegasus.backendapi.category.model.CategoryResponse
 import org.pegasus.backendapi.category.model.request.CategoryCreateRequest
 import org.pegasus.backendapi.category.model.request.CategoryRequest
+import org.pegasus.backendapi.utils.IMapper
 
 class CategoryMapper {
 
-    companion object {
+    companion object : IMapper<CategoryRequest, CategoryDto, Category, CategoryResponse> {
 
-        fun toEntity(dto: CategoryDto) = Category(
+        override fun toEntity(dto: CategoryDto) = Category(
             name = dto.name,
             type = dto.type,
             description = dto.description
         )
 
-        fun toDto(entity: Category) = CategoryDto(
+        override fun toDto(entity: Category) = CategoryDto(
             id = entity.id,
             name = entity.name,
             description = entity.description,
@@ -25,7 +23,7 @@ class CategoryMapper {
             type = entity.type,
         )
 
-        fun toResponse(dto: CategoryDto) = CategoryResponse(
+        override fun toResponse(dto: CategoryDto) = CategoryResponse(
             id = dto.id,
             name = dto.name,
             type = dto.type,
@@ -34,7 +32,7 @@ class CategoryMapper {
             update = dto.update,
         )
 
-        fun toDto(request: CategoryRequest): CategoryDto = CategoryDto(
+        override fun toDto(request: CategoryRequest): CategoryDto = CategoryDto(
             id = request.id,
             name = request.name,
             description = request.description,

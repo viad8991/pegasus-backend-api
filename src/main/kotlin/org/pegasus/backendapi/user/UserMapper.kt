@@ -1,21 +1,19 @@
 package org.pegasus.backendapi.user
 
-import org.pegasus.backendapi.user.model.Role
-import org.pegasus.backendapi.user.model.User
-import org.pegasus.backendapi.user.model.UserDto
-import org.pegasus.backendapi.user.model.UserResponse
+import org.pegasus.backendapi.user.model.*
+import org.pegasus.backendapi.utils.IMapper
 
 class UserMapper {
-    companion object {
 
-        fun toEntity(dto: UserDto) = User(
+    companion object : IMapper<UserRequest, UserDto, User, UserResponse> {
+        override fun toEntity(dto: UserDto) = User(
             username = dto.username,
             email = "123@mail.com",
             password = "123",
             role = Role.USER
         )
 
-        fun toDto(entity: User) = UserDto(
+        override fun toDto(entity: User) = UserDto(
             id = entity.id,
             username = entity.username,
             email = entity.email,
@@ -28,7 +26,7 @@ class UserMapper {
             family = entity.family?.id,
         )
 
-        fun toResponse(dto: UserDto) = UserResponse(
+        override fun toResponse(dto: UserDto) = UserResponse(
             id = dto.id,
             username = dto.username,
             email = dto.email,
@@ -40,4 +38,5 @@ class UserMapper {
             created = dto.created
         )
     }
+
 }

@@ -2,6 +2,7 @@ package org.pegasus.backendapi.category.model
 
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
+import org.pegasus.backendapi.utils.IEntity
 import java.time.Instant
 import java.util.*
 
@@ -28,4 +29,4 @@ data class Category(
     @Version
     val version: Long = 0
 
-)
+): IEntity

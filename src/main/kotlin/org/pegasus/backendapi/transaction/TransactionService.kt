@@ -4,6 +4,7 @@ import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.category.exception.CategoryNotFoundException
 import org.pegasus.backendapi.category.service.CategoryInternalService
 import org.pegasus.backendapi.transaction.model.TransactionDto
+import org.pegasus.backendapi.transaction.model.TransactionMapper
 import org.pegasus.backendapi.user.service.UserInternalService
 import org.springframework.stereotype.Service
 

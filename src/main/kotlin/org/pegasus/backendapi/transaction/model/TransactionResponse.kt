@@ -8,6 +8,6 @@ import java.util.*
 data class TransactionResponse(
     val id: UUID?,
     val amount: BigDecimal,
-    val date: Instant?,
+    val created: Instant?,
     val category: CategoryResponse? = null,
 )

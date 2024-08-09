@@ -24,8 +24,6 @@ data class Transaction(
     @ManyToOne
     val category: Category? = null,
 
-    val date: Instant = Instant.now(),
-
     val created: Instant = Instant.now(),
 
     @UpdateTimestamp
