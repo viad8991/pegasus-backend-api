@@ -1,23 +1,22 @@
 package org.pegasus.backendapi.category.service
 
 import jakarta.transaction.Transactional
-import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.category.CategoryRepository
 import org.pegasus.backendapi.category.model.CategoryDto
 import org.pegasus.backendapi.category.model.CategoryMapper
 import org.pegasus.backendapi.category.model.TransactionType
 import org.pegasus.backendapi.category.model.TransactionType.EXPENSE
 import org.pegasus.backendapi.category.model.TransactionType.INCOME
-import org.springframework.stereotype.Service
 import java.util.*
 
-@Service
-class CategoryService(private val categoryRepository: CategoryRepository) {
+open class CategoryService(private val categoryRepository: CategoryRepository) {
 
-    private val log = logger()
+    // val log = loggerOf(CategoryService::class.java)
 
     fun getByType(type: TransactionType?): Set<CategoryDto> {
-        log.info { "new req by type with param '$type'" }
+        // log.info { "new req by type with param '$type'" }
+        println("new req by type with param '$type'")
+
         val categories = when (type) {
             INCOME, EXPENSE -> categoryRepository.findByType(type)
             null -> categoryRepository.findAll()

@@ -14,13 +14,13 @@ import org.pegasus.backendapi.user.UserMapper
 import org.pegasus.backendapi.user.service.UserInternalService
 import org.springframework.transaction.annotation.Transactional
 
-class FamilyService(
-    val transactionService: TransactionInternalService,
-    val familyRepository: FamilyRepository,
-    val userService: UserInternalService
+open class FamilyService(
+    private val transactionService: TransactionInternalService,
+    private val familyRepository: FamilyRepository,
+    private val userService: UserInternalService
 ) {
 
-    private final val log = logger()
+    private val log = logger()
 
     fun create(): FamilyDto {
         val user = userService.currentUser()

@@ -6,43 +6,30 @@ import org.pegasus.backendapi.category.model.CategoryResponse
 import org.pegasus.backendapi.category.model.TransactionType
 import org.pegasus.backendapi.category.model.request.CategoryCreateRequest
 import org.pegasus.backendapi.category.service.CategoryService
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@RestController
-@RequestMapping("/api/v1/category")
-class CategoryController(val categoryService: CategoryService) {
+class CategoryController(private val categoryService: CategoryService) {
 
     private val log = logger()
 
-    @GetMapping
-    fun fetchByType(
-        @RequestParam(name = "type", required = false)
-        type: TransactionType? = null
-    ): ResponseEntity<List<CategoryResponse>> {
+    fun fetchByType(type: TransactionType? = null): List<CategoryResponse> {
+        log.info { "new request to fetch with param $type" }
+
         val categories = categoryService.getByType(type)
-        return if (categories.isEmpty()) {
-            ResponseEntity.noContent().build()
-        } else {
-            ResponseEntity.ok(categories.map { category -> CategoryMapper.toResponse(category) })
-        }
+        return categories.map { CategoryMapper.toResponse(it) }
     }
 
-    @PostMapping
-    fun create(@RequestBody categoryRequest: CategoryCreateRequest): ResponseEntity<CategoryResponse> {
-        val category = categoryService.create(CategoryMapper.toDto(categoryRequest))
-        return ResponseEntity.ok(CategoryMapper.toResponse(category))
+    fun create(request: CategoryCreateRequest): CategoryResponse {
+        log.info { "new request to create with param $request" }
+
+        val category = categoryService.create(CategoryMapper.toDto(request))
+        return CategoryMapper.toResponse(category)
     }
 
-    @PostMapping("/{id}")
-    fun update(@PathVariable id: UUID, @RequestBody request: CategoryCreateRequest): ResponseEntity<CategoryResponse> {
+    fun update(id: UUID, request: CategoryCreateRequest): CategoryResponse? {
+        log.info { "new request to update with param $id $request" }
+
         val category = categoryService.update(id, CategoryMapper.toDto(request))
-        return if (category == null) {
-            ResponseEntity.noContent().build()
-        } else {
-            ResponseEntity.ok(CategoryMapper.toResponse(category))
-        }
-
+        return category?.let { CategoryMapper.toResponse(it) }
     }
 }

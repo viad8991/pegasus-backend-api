@@ -46,6 +46,9 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
                 requests
                     .requestMatchers("/api/v1/auth").permitAll()
 
+                    // TODO for test
+                    .requestMatchers("/api/v1/category/**").permitAll()
+
                     .requestMatchers("/api/v1/user/**").authenticated()
                     .requestMatchers("/api/v1/transaction").authenticated()
 
