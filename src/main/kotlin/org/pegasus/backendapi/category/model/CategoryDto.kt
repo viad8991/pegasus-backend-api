@@ -8,11 +8,11 @@ data class CategoryDto(
 
     val id: UUID? = null,
 
-    val name: String,
+    var name: String,
 
-    val type: TransactionType,
+    var type: TransactionType,
 
-    val description: String? = null,
+    var description: String? = null,
 
     val update: Instant? = null,
 

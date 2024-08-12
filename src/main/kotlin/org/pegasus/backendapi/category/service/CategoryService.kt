@@ -1,6 +1,6 @@
 package org.pegasus.backendapi.category.service
 
-import jakarta.transaction.Transactional
+import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.category.CategoryRepository
 import org.pegasus.backendapi.category.model.CategoryDto
 import org.pegasus.backendapi.category.model.CategoryMapper
@@ -9,13 +9,12 @@ import org.pegasus.backendapi.category.model.TransactionType.EXPENSE
 import org.pegasus.backendapi.category.model.TransactionType.INCOME
 import java.util.*
 
-open class CategoryService(private val categoryRepository: CategoryRepository) {
+class CategoryService(private val categoryRepository: CategoryRepository) {
 
-    // val log = loggerOf(CategoryService::class.java)
+    private val log = logger()
 
     fun getByType(type: TransactionType?): Set<CategoryDto> {
-        // log.info { "new req by type with param '$type'" }
-        println("new req by type with param '$type'")
+        log.info { "new req by type with param '$type'" }
 
         val categories = when (type) {
             INCOME, EXPENSE -> categoryRepository.findByType(type)
@@ -29,27 +28,12 @@ open class CategoryService(private val categoryRepository: CategoryRepository) {
     }
 
     fun create(dto: CategoryDto): CategoryDto {
-        val category = CategoryMapper.toEntity(dto)
-        categoryRepository.save(category)
-        return CategoryMapper.toDto(category)
+        return categoryRepository.create(dto)
     }
 
-    @Transactional
     fun update(id: UUID, dto: CategoryDto): CategoryDto? {
-        val findCategory = categoryRepository.findById(id)
-        var result: CategoryDto? = null
-
-        findCategory.ifPresent { category ->
-            category.name = dto.name
-            category.type = dto.type
-            category.description = dto.description
-
-            categoryRepository.save(category)
-
-            result = CategoryMapper.toDto(category)
-        }
-
-        return result
+        val newCategory = categoryRepository.update(id, dto)
+        return newCategory?.let { CategoryMapper.toDto(it) }
     }
 
 }

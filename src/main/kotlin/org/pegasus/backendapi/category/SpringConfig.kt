@@ -1,5 +1,6 @@
 package org.pegasus.backendapi.category
 
+import jakarta.persistence.EntityManager
 import org.pegasus.backendapi.category.model.TransactionType
 import org.pegasus.backendapi.category.model.request.CategoryCreateRequest
 import org.pegasus.backendapi.category.service.CategoryInternalService
@@ -14,8 +15,8 @@ import java.util.*
 val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
 
     bean {
-        val categoryRepository = ref<CategoryRepository>()
-        CategoryService(categoryRepository)
+        val entityManager = ref<EntityManager>()
+        CategoryRepository(entityManager)
     }
 
     bean {
@@ -24,7 +25,8 @@ val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext
     }
 
     bean {
-        val categoryService: CategoryService = ref<CategoryService>()
+        val categoryRepository = ref<CategoryRepository>()
+        val categoryService = CategoryService(categoryRepository)
         val categoryController = CategoryController(categoryService)
 
         router {

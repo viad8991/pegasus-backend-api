@@ -32,4 +32,5 @@ class CategoryController(private val categoryService: CategoryService) {
         val category = categoryService.update(id, CategoryMapper.toDto(request))
         return category?.let { CategoryMapper.toResponse(it) }
     }
+
 }
