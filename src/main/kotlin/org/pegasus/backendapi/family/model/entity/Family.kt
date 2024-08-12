@@ -1,6 +1,13 @@
 package org.pegasus.backendapi.family.model.entity
 
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
+import jakarta.persistence.Version
 import org.hibernate.annotations.UpdateTimestamp
 import org.pegasus.backendapi.user.model.User
 import org.pegasus.backendapi.utils.IEntity

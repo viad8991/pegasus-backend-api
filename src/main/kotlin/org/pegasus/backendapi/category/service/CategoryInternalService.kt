@@ -8,7 +8,7 @@ import java.util.*
 open class CategoryInternalService(private val categoryRepository: CategoryRepository) {
 
     fun findById(id: UUID): Category {
-        return categoryRepository.findById(id) ?: throw CategoryNotFoundException()
+        return categoryRepository.findById(id) ?: throw CategoryNotFoundException(id)
     }
 
 }

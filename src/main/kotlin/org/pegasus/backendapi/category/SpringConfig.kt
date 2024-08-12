@@ -8,6 +8,8 @@ import org.pegasus.backendapi.category.service.CategoryService
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.reactive.function.server.coRouter
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.router
 import java.util.*
@@ -27,7 +29,7 @@ val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext
     bean {
         val categoryRepository = ref<CategoryRepository>()
         val categoryService = CategoryService(categoryRepository)
-        val categoryController = CategoryController(categoryService)
+        val categoryHandler = CategoryHandler(categoryService)
 
         router {
             "/api/v1/category".nest {
@@ -35,7 +37,7 @@ val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext
                     val type = serverRequest.param("type")
                         .map { TransactionType.valueOf(it) }
                         .orElse(null)
-                    val response = categoryController.fetchByType(type)
+                    val response = categoryHandler.fetchByType(type)
 
                     if (response.isEmpty()) {
                         ServerResponse.noContent().build()
@@ -46,14 +48,14 @@ val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext
                 }
                 POST("/") { serverRequest ->
                     val body = serverRequest.body(CategoryCreateRequest::class.java)
-                    val response = categoryController.create(body)
+                    val response = categoryHandler.create(body)
 
                     ServerResponse.ok().body(response)
                 }
                 POST("/{id}") { serverRequest ->
                     val id = UUID.fromString(serverRequest.pathVariable("id"))
                     val body = serverRequest.body(CategoryCreateRequest::class.java)
-                    val response = categoryController.update(id, body)
+                    val response = categoryHandler.update(id, body)
 
                     if (response == null) {
                         ServerResponse.noContent().build()
@@ -62,6 +64,7 @@ val categoryInitializer: ApplicationContextInitializer<GenericApplicationContext
                     }
                 }
             }
+
         }
     }
 }

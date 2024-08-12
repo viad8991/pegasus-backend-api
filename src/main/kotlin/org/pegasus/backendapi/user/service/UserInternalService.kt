@@ -1,6 +1,5 @@
 package org.pegasus.backendapi.user.service
 
-import jakarta.transaction.Transactional
 import org.pegasus.backendapi.family.model.entity.Family
 import org.pegasus.backendapi.user.UserRepository
 import org.pegasus.backendapi.user.model.User
@@ -9,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 
-class UserInternalService(private val userRepository: UserRepository) : UserDetailsService {
+open class UserInternalService(private val userRepository: UserRepository) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
         return userRepository.findByUsername(username) ?: throw BadCredentialsException("unauthorized request")
@@ -24,10 +23,9 @@ class UserInternalService(private val userRepository: UserRepository) : UserDeta
         }
     }
 
-    @Transactional
     fun updateFamily(user: User, family: Family): User {
         user.family = family
-        return userRepository.save(user)
+        return userRepository.update(user)
     }
 
 }

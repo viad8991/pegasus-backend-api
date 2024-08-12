@@ -5,12 +5,13 @@ plugins {
     war
 
     checkstyle
+    // id("io.gitlab.arturbosch.detekt")
 
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
     kotlin("plugin.allopen")
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("plugin.serialization")
 
     id("org.springframework.boot")
     id("io.spring.dependency-management")
@@ -35,7 +36,7 @@ dependencies {
     implementation(Kotlin.stdlib)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:_")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation(KotlinX.serialization.json)
 
     /* DevTools */
     developmentOnly(Spring.boot.devTools)
@@ -58,7 +59,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:_")
 
     /* БД */
-    implementation(Spring.boot.data.jpa)  // implementation(Spring.boot.data.r2dbc) // - Aсинхронная JPA
+    implementation(Spring.boot.data.jpa)
+    // implementation(Spring.boot.data.r2dbc)
     implementation("org.liquibase:liquibase-core:_")
     runtimeOnly("org.postgresql:postgresql:_")
 
@@ -91,6 +93,16 @@ tasks {
             freeCompilerArgs.add("-Xjsr305=strict")
         }
     }
+
+//    withType<Detekt>().configureEach {
+//        jvmTarget = "21"
+//        languageVersion = "2.0.10"
+//
+//        reports {
+//            html.required.set(true)
+//        }
+//    }
+
 }
 
 kotlin {

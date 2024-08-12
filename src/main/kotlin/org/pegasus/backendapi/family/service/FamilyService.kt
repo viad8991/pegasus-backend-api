@@ -7,7 +7,6 @@ import org.pegasus.backendapi.family.FamilyRepository
 import org.pegasus.backendapi.family.model.FamilyMapper
 import org.pegasus.backendapi.family.model.dto.FamilyDto
 import org.pegasus.backendapi.family.model.dto.MemberTransactionDto
-import org.pegasus.backendapi.family.model.entity.Family
 import org.pegasus.backendapi.transaction.model.TransactionMapper
 import org.pegasus.backendapi.transaction.service.TransactionInternalService
 import org.pegasus.backendapi.user.UserMapper
@@ -29,8 +28,7 @@ open class FamilyService(
             throw FamilyAlreadyException(user.username)
         }
 
-        val newFamily = Family()
-        val family = familyRepository.save(newFamily)
+        val family = familyRepository.create()
         userService.updateFamily(user, family)
         return FamilyMapper.toDto(family)
     }
@@ -43,8 +41,7 @@ open class FamilyService(
         // TODO
         //  Как же это костыльно. Метод - Transactional, а полчить currentUser.family.members - нельзя...
         //  Я явно что-то не так делаю
-        val family = familyRepository.findById(familyId)
-            .orElseThrow { throw FamilyNotExistException(currentUser.username) }
+        val family = familyRepository.findById(familyId) ?: throw FamilyNotExistException(currentUser.username)
 
         val members = family.members.filter { user -> user.family?.id == currentUser.family?.id }.toSet()
         val transactions = transactionService.getLatestForUsers(members)
@@ -60,8 +57,7 @@ open class FamilyService(
         val currentUser = userService.currentUser()
 
         val familyId = currentUser.family?.id ?: throw FamilyNotExistException(currentUser.username)
-        val family =
-            familyRepository.findById(familyId).orElseThrow { throw FamilyNotExistException(currentUser.username) }
+        val family = familyRepository.findById(familyId) ?: throw FamilyNotExistException(currentUser.username)
 
         val familyMembers = family.members.filter { user -> user.family?.id == currentUser.family?.id }.toSet()
         val transactionByUser = transactionService.getLatestForUsers(familyMembers)

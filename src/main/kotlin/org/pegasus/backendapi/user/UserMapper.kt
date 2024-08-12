@@ -1,6 +1,10 @@
 package org.pegasus.backendapi.user
 
-import org.pegasus.backendapi.user.model.*
+import org.pegasus.backendapi.user.model.Role
+import org.pegasus.backendapi.user.model.User
+import org.pegasus.backendapi.user.model.UserDto
+import org.pegasus.backendapi.user.model.UserRequest
+import org.pegasus.backendapi.user.model.UserResponse
 import org.pegasus.backendapi.utils.IMapper
 
 class UserMapper {

@@ -28,7 +28,7 @@ class JwtRequestFilter(
         filterChain: FilterChain
     ) {
         val jwt: String? = request.getHeader(authorizationHeaderName)
-        log.info { "jwt $jwt" }
+        log.info { "request ${request.requestURL} jwt $jwt" }
         val username: String? = jwt?.let { jwtService.extractUsername(jwt) }
 
         if (username != null && SecurityContextHolder.getContext().authentication == null) {

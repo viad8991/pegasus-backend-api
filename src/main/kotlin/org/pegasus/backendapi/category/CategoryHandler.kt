@@ -8,7 +8,7 @@ import org.pegasus.backendapi.category.model.request.CategoryCreateRequest
 import org.pegasus.backendapi.category.service.CategoryService
 import java.util.*
 
-class CategoryController(private val categoryService: CategoryService) {
+class CategoryHandler(private val categoryService: CategoryService) {
 
     private val log = logger()
 

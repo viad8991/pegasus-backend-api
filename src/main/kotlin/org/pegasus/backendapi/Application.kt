@@ -1,5 +1,6 @@
 package org.pegasus.backendapi
 
+import org.pegasus.backendapi.auth.authInitializer
 import org.pegasus.backendapi.category.categoryInitializer
 import org.pegasus.backendapi.family.familyInitializer
 import org.pegasus.backendapi.security.SecuritySettings
@@ -27,6 +28,7 @@ fun main(args: Array<String>) {
 object AppInitializer : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
         userInitializer.initialize(applicationContext)
+        authInitializer.initialize(applicationContext)
 
         securityInitializer.initialize(applicationContext)
 

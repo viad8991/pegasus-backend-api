@@ -28,9 +28,8 @@ class TransactionService(
         val categoryId = dto.category?.id ?: throw CategoryNotFoundException()
         val user = userService.currentUser()
         val category = categoryService.findById(categoryId)
-        val transaction = TransactionMapper.toEntity(dto, user, category)
 
-        transactionRepository.save(transaction)
+        val transaction = transactionRepository.create(dto, user, category)
         log.info { "Creating transaction for user ${user.id}: $transaction" }
         return TransactionMapper.toDto(transaction)
     }

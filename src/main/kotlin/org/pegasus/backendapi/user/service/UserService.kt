@@ -24,16 +24,18 @@ class UserService(
     }
 
     fun create(userDto: UserDto): UserDto {
-        return UserMapper.toDto(userRepository.save(UserMapper.toEntity(userDto)))
+        return UserMapper.toDto(userRepository.create(userDto))
     }
 
     fun findUser(id: UUID): UserDto? {
-        val foundUser = userRepository.findById(id)
-        return if (foundUser.isPresent) UserMapper.toDto(foundUser.get()) else null
+        val user = userRepository.findById(id)
+        return user?.let { UserMapper.toDto(it) }
     }
 
     fun fetchCurrentUserData(): UserDto {
         return UserMapper.toDto(internalService.currentUser())
     }
+
+    fun currentUser(): UserDto = UserMapper.toDto(internalService.currentUser())
 
 }
