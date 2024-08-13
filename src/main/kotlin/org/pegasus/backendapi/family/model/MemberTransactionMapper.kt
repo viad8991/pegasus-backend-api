@@ -10,7 +10,7 @@ class MemberTransactionMapper {
 
     companion object : IMapper<Nothing, MemberTransactionDto, Nothing, MemberResponse> {
         override fun toDto(entity: Nothing): MemberTransactionDto {
-            throw UnsupportedOperationException("request->dto is not implemented")
+            throw UnsupportedOperationException("ent->dto is not implemented")
         }
 
         override fun toResponse(dto: MemberTransactionDto) = MemberResponse(

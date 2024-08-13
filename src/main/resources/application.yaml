@@ -20,5 +20,10 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  rsocket:
+    server:
+      port: 7000
+      transport: websocket
+
 security:
   salt: 'my-32-char-secret-key-which-is-secure'

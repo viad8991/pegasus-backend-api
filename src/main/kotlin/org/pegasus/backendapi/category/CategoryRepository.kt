@@ -16,7 +16,7 @@ class CategoryRepository(private val entityManager: EntityManager) {
     private val log = logger()
 
     fun create(dto: CategoryDto): CategoryDto {
-        val category = CategoryMapper.toEntity(dto)
+        val category: Category = CategoryMapper.toEntity(dto)
         entityManager.persist(category)
         return CategoryMapper.toDto(category)
     }

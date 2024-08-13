@@ -37,14 +37,17 @@ val userInitializer: ApplicationContextInitializer<GenericApplicationContext> = 
         val userHandler = ref<UserHandler>()
 
         router {
-            "/api/v1/user".nest {
+            "/api/v1/users".nest {
+                GET("/me") { _ ->
+                    val response = userHandler.user()
+                    ServerResponse.ok().body(response)
+                }
                 GET("/{id}") { request ->
-                    val id = request.pathVariable("id").map { UUID.fromString(it) }.orElse(null)
+                    val id = UUID.fromString(request.pathVariable("id"))
                     val response = userHandler.user(id)
-
                     if (response == null) ServerResponse.noContent().build() else ServerResponse.ok().body(response)
                 }
-                GET("/list") { _ ->
+                GET { _ ->
                     val response = userHandler.all()
                     if (response.isEmpty()) ServerResponse.noContent().build() else ServerResponse.ok().body(response)
                 }

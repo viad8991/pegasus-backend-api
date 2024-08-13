@@ -2,6 +2,9 @@ package org.pegasus.backendapi.utils
 
 interface IMapper<R : IRequest, D : IDto, E : IEntity, S : IResponse> {
 
+    // Controller -> (Controller + Service + Repository) -> (Repository) -> (Service + Controller) -> Controller
+    // FooRequest ->                FooDto               ->  FooEntity    ->       FooDto          -> FooResponse
+
     fun toDto(request: R): D {
         throw UnsupportedOperationException("request->dto is not implemented")
     }

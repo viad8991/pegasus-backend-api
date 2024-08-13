@@ -1,29 +1,30 @@
-package org.pegasus.backendapi.family.model.entity
+package org.pegasus.backendapi.notification.model
 
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import jakarta.persistence.Version
 import org.hibernate.annotations.UpdateTimestamp
-import org.pegasus.backendapi.user.model.User
 import org.pegasus.backendapi.utils.IEntity
 import java.time.Instant
 import java.util.*
 
 @Entity
-@Table(name = "families")
-class Family(
+@Table(name = "notifications")
+class Notification(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
 
-    @OneToMany(mappedBy = "family", fetch = FetchType.LAZY)
-    val members: MutableSet<User> = mutableSetOf(),
+    @Enumerated(EnumType.STRING)
+    val status: NotificationStatus,
+
+    val body: String,
 
     val created: Instant = Instant.now(),
 

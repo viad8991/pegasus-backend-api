@@ -34,9 +34,10 @@ repositories {
 dependencies {
     /* Kotlin */
     implementation(Kotlin.stdlib)
+    implementation(KotlinX.serialization.json)
+    implementation(KotlinX.coroutines.core)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:_")
-    implementation(KotlinX.serialization.json)
 
     /* DevTools */
     developmentOnly(Spring.boot.devTools)
@@ -51,6 +52,7 @@ dependencies {
     /* spring web */
     implementation(Spring.boot.web)
     implementation(Spring.boot.webflux)
+    implementation(Spring.boot.rsocket)
 
     /* ??? */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")

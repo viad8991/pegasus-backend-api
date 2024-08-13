@@ -1,6 +1,8 @@
 package org.pegasus.backendapi.category
 
 import org.apache.logging.log4j.kotlin.logger
+import org.pegasus.backendapi.category.model.Category
+import org.pegasus.backendapi.category.model.CategoryDto
 import org.pegasus.backendapi.category.model.CategoryMapper
 import org.pegasus.backendapi.category.model.CategoryResponse
 import org.pegasus.backendapi.category.model.TransactionType
@@ -22,8 +24,9 @@ class CategoryHandler(private val categoryService: CategoryService) {
     fun create(request: CategoryCreateRequest): CategoryResponse {
         log.info { "new request to create with param $request" }
 
-        val category = categoryService.create(CategoryMapper.toDto(request))
-        return CategoryMapper.toResponse(category)
+        val categoryDtoRequest : CategoryDto = CategoryMapper.toDto(request)
+        val categoryDtoResponse : CategoryDto = categoryService.create(categoryDtoRequest)
+        return CategoryMapper.toResponse(categoryDtoResponse)
     }
 
     fun update(id: UUID, request: CategoryCreateRequest): CategoryResponse? {

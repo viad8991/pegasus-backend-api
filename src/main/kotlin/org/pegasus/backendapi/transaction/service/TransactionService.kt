@@ -25,8 +25,10 @@ class TransactionService(
 
     fun create(dto: TransactionDto): TransactionDto {
         log.info { "new transaction $dto" }
-        val categoryId = dto.category?.id ?: throw CategoryNotFoundException()
+
         val user = userService.currentUser()
+
+        val categoryId = dto.category?.id ?: throw CategoryNotFoundException()
         val category = categoryService.findById(categoryId)
 
         val transaction = transactionRepository.create(dto, user, category)

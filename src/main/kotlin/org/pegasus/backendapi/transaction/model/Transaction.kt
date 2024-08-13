@@ -1,10 +1,13 @@
 package org.pegasus.backendapi.transaction.model
 
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import jakarta.persistence.Version
 import org.hibernate.annotations.UpdateTimestamp
@@ -20,15 +23,15 @@ data class Transaction(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID? = null,
 
     val amount: BigDecimal,
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     val user: User,
 
-    @ManyToOne
-    val category: Category? = null,
+    @OneToOne(fetch = FetchType.LAZY)
+    val category: Category,
 
     val created: Instant = Instant.now(),
 

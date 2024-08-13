@@ -9,9 +9,11 @@ class UserHandler(private val userService: UserService) {
 
     private val log = logger()
 
-    fun user(id: UUID?): UserResponse? {
-        val user = if (id == null) userService.currentUser() else userService.findUser(id)
-        return user?.let { UserMapper.toResponse(it) }
+    fun user(id: UUID): UserResponse? = userService.findUser(id)?.let { UserMapper.toResponse(it) }
+
+    fun user(): UserResponse {
+        val user = userService.currentUser()
+        return UserMapper.toResponse(user)
     }
 
     fun all(): List<UserResponse> = userService.getAllUsers()

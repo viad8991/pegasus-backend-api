@@ -10,16 +10,16 @@ class FamilyMapper {
     companion object : IMapper<Nothing, FamilyDto, Family, FamilyResponse> {
 
         override fun toDto(entity: Family) = FamilyDto(
-            entity.id,
-            entity.members.map { user -> UserMapper.toDto(user) },
-            entity.created,
-            entity.update,
+            id = entity.id,
+            members = entity.members.map { user -> UserMapper.toDto(user) },
+            created = entity.created,
+            update = entity.update,
         )
 
         override fun toResponse(dto: FamilyDto) = FamilyResponse(
-            dto.id,
-            dto.update,
-            dto.created,
+            id = dto.id,
+            update = dto.update,
+            created = dto.created,
         )
 
     }

@@ -42,7 +42,7 @@ val transactionInitializer: ApplicationContextInitializer<GenericApplicationCont
         val transactionController = ref<TransactionController>()
 
         router {
-            "/api/v1/transaction".nest {
+            "/api/v1/transactions".nest {
                 GET("/") {
                     val transactions = transactionController.all()
                     if (transactions.isEmpty()) {

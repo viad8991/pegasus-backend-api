@@ -2,7 +2,9 @@ package org.pegasus.backendapi
 
 import org.pegasus.backendapi.auth.authInitializer
 import org.pegasus.backendapi.category.categoryInitializer
+import org.pegasus.backendapi.chat.chatInitializer
 import org.pegasus.backendapi.family.familyInitializer
+import org.pegasus.backendapi.notification.notificationInitializer
 import org.pegasus.backendapi.security.SecuritySettings
 import org.pegasus.backendapi.security.securityInitializer
 import org.pegasus.backendapi.transaction.transactionInitializer
@@ -35,5 +37,8 @@ object AppInitializer : ApplicationContextInitializer<GenericApplicationContext>
         categoryInitializer.initialize(applicationContext)
         familyInitializer.initialize(applicationContext)
         transactionInitializer.initialize(applicationContext)
+
+        chatInitializer.initialize(applicationContext)
+        notificationInitializer.initialize(applicationContext)
     }
 }

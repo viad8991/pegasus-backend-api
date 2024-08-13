@@ -2,10 +2,12 @@ package org.pegasus.backendapi.family
 
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
+import jakarta.transaction.Transactional
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.family.model.entity.Family
 import java.util.*
 
+@Transactional
 class FamilyRepository(private val entityManager: EntityManager) {
 
     private val log = logger()

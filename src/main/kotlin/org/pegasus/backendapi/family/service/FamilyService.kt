@@ -11,9 +11,8 @@ import org.pegasus.backendapi.transaction.model.TransactionMapper
 import org.pegasus.backendapi.transaction.service.TransactionInternalService
 import org.pegasus.backendapi.user.UserMapper
 import org.pegasus.backendapi.user.service.UserInternalService
-import org.springframework.transaction.annotation.Transactional
 
-open class FamilyService(
+class FamilyService(
     private val transactionService: TransactionInternalService,
     private val familyRepository: FamilyRepository,
     private val userService: UserInternalService
@@ -23,17 +22,16 @@ open class FamilyService(
 
     fun create(): FamilyDto {
         val user = userService.currentUser()
-
-        if (user.family != null) {
-            throw FamilyAlreadyException(user.username)
-        }
+        if (user.family != null) throw FamilyAlreadyException(user.username)
 
         val family = familyRepository.create()
+
+        log.info { "create new family for ${user.username} family is $family" }
+
         userService.updateFamily(user, family)
         return FamilyMapper.toDto(family)
     }
 
-    @Transactional
     fun getMembers(): Set<MemberTransactionDto> {
         val currentUser = userService.currentUser()
 

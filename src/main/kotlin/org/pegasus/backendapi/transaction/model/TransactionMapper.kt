@@ -13,7 +13,7 @@ class TransactionMapper {
             category = request.category?.let { CategoryMapper.toDto(it) },
         )
 
-        fun toEntity(dto: TransactionDto, user: User, category: Category?) = Transaction(
+        fun toEntity(dto: TransactionDto, user: User, category: Category) = Transaction(
             amount = dto.amount,
             category = category,
             user = user
@@ -23,7 +23,7 @@ class TransactionMapper {
             id = entity.id,
             amount = entity.amount,
             created = entity.created,
-            category = entity.category?.let { CategoryMapper.toDto(it) }
+            category = CategoryMapper.toDto(entity.category)
         )
 
         fun toResponse(dto: TransactionDto) = TransactionResponse(

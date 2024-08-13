@@ -5,7 +5,7 @@ import java.time.Instant
 import java.util.*
 
 data class UserDto(
-    val id: UUID,
+    val id: UUID?,
     val username: String,
     val email: String?,
     val birthDate: Instant?,

@@ -38,7 +38,7 @@ val familyInitializer: ApplicationContextInitializer<GenericApplicationContext> 
         val familyHandler = ref<FamilyHandler>()
 
         router {
-            "/api/v1/family".nest {
+            "/api/v1/families".nest {
                 POST("/") { _ ->
                     val response = familyHandler.create()
                     ServerResponse.ok().body(response)

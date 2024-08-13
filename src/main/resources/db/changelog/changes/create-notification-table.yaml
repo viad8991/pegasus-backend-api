@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-notifications-table-20240813
+      author: vshevchenko
+      changes:
+        - createTable:
+            tableName: notifications
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValue: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValue: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValue: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValue: '0'
+                  constraints:
+                    nullable: false
