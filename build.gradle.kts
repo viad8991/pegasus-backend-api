@@ -36,6 +36,7 @@ dependencies {
     implementation(Kotlin.stdlib)
     implementation(KotlinX.serialization.json)
     implementation(KotlinX.coroutines.core)
+    implementation(KotlinX.coroutines.reactor)
     implementation("org.jetbrains.kotlin:kotlin-reflect:_")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:_")
 
@@ -45,8 +46,9 @@ dependencies {
     /* SECURITY */
     implementation(Spring.boot.security)
     implementation(Spring.boot.oauth2Client)
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:_")
+    implementation(Spring.security.spring_security_rsocket)
     implementation("io.jsonwebtoken:jjwt-api:_")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:_")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:_")
 
     /* spring web */
@@ -68,13 +70,17 @@ dependencies {
 
     /* Test Depends */
     testImplementation(Kotlin.test)
-    testImplementation(Spring.boot.test)
+    // testImplementation(Spring.boot.test)
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "mockito-core")
+    }
     testImplementation(Testing.assertj.db)
     testImplementation(Testing.assertj.core)
     testImplementation("io.zonky.test:embedded-postgres:_")
     testImplementation("com.github.database-rider:rider-core:_")
     testImplementation("com.github.database-rider:rider-spring:_")
     testImplementation("io.zonky.test:embedded-database-spring-test:_")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 
 }
 

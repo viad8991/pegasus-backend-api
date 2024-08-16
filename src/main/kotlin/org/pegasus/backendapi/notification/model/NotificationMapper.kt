@@ -6,10 +6,6 @@ class NotificationMapper {
 
     companion object : IMapper<Nothing, NotificationDto, Notification, NotificationResponse> {
 
-        override fun toDto(request: Nothing): NotificationDto {
-            return super.toDto(request)
-        }
-
         override fun toEntity(dto: NotificationDto): Notification = Notification(
             status = NotificationStatus.NOT_READ,
             body = dto.body,
@@ -21,7 +17,8 @@ class NotificationMapper {
         )
 
         override fun toResponse(dto: NotificationDto): NotificationResponse = NotificationResponse(
-            id = dto.id
+            id = dto.id,
+            body = dto.body
         )
 
     }

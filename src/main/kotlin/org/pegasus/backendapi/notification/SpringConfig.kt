@@ -9,7 +9,6 @@ import org.pegasus.backendapi.user.service.UserInternalService
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
-import kotlin.coroutines.CoroutineContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 val notificationInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
@@ -30,14 +29,13 @@ val notificationInitializer: ApplicationContextInitializer<GenericApplicationCon
     bean {
         val notificationRepository = ref<NotificationRepository>()
         val userService = ref<UserInternalService>()
-        val coroutineContext = ref<CoroutineContext>("notificationDispatcher")
-
-        NotificationService(notificationRepository, userService, coroutineContext)
+        NotificationService(notificationRepository, userService)
     }
 
     bean {
-        val notificationService = ref<NotificationService>()
-        NotificationHandler(notificationService)
+//        val coroutineContext = ref<CoroutineContext>("notificationDispatcher")
+//        val notificationService = ref<NotificationService>()
+//        NotificationHandler(notificationService, coroutineContext)
     }
 
 }

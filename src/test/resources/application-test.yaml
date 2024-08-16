@@ -1,3 +1,15 @@
+datasource:
+  schema: 'public'
+
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
+
   level:
     org.pegasus.backendapi: DEBUG
+    io.rsocket: DEBUG
+
+spring:
+  rsocket:
+    server:
+      port: 0

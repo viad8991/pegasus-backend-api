@@ -20,6 +20,48 @@ class AuthController(private val userService: UserService, private val jwtServic
         }
     }
 
+    fun refresh(): String {
+        return "";
+//        try {
+//            val username = jwtService.getUsernameFromRefreshToken(refreshToken)
+//            val user = userService.loadUserByUsername(username)
+//            if (jwtTokenProvider.validateRefreshToken(refreshToken, user)) {
+//                val newAccessToken = jwtTokenProvider.createToken(user.username, user.roles)
+//                return ResponseEntity.ok(mapOf("accessToken" to newAccessToken))
+//            }
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid refresh token")
+//        } catch (e: Exception) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error refreshing token")
+//        }
+    }
+
+//    JwtTokenFilter
+//    try {
+//        val username = jwtTokenProvider.getUsernameFromRefreshToken(refreshToken)
+//        val user = userService.loadUserByUsername(username)
+//        if (jwtTokenProvider.validateRefreshToken(refreshToken, user)) {
+//            val newAccessToken = jwtTokenProvider.createToken(user.username, user.roles)
+//            return ResponseEntity.ok(mapOf("accessToken" to newAccessToken))
+//        }
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid refresh token")
+//    } catch (e: Exception) {
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error refreshing token")
+//    }
+
+//    JwtTokenProvider
+//    fun shouldTokenBeRefreshed(token: String): Boolean {
+//        val expirationDate = getExpirationDateFromToken(token)
+//        val now = Date()
+//        val diff = expirationDate.time - now.time
+//        return diff < REFRESH_THRESHOLD // например, 5 минут
+//    }
+//
+//    fun refreshToken(token: String): String {
+//        val claims = getAllClaimsFromToken(token)
+//        claims.issuedAt = Date()
+//        return generateToken(claims)
+//    }
+
     data class LoginRequest(
         val username: String,
         val password: String

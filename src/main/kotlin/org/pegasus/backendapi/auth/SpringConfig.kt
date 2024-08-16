@@ -32,6 +32,9 @@ val authInitializer: ApplicationContextInitializer<GenericApplicationContext> = 
                         ServerResponse.ok().body(response)
                     }
                 }
+                POST("/refresh") {
+                    ServerResponse.ok().body(authController.refresh())
+                }
             }
         }
 
