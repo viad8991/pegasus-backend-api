@@ -31,6 +31,7 @@ object AppInitializer : ApplicationContextInitializer<GenericApplicationContext>
     override fun initialize(applicationContext: GenericApplicationContext) {
         userInitializer.initialize(applicationContext)
         authInitializer.initialize(applicationContext)
+        notificationInitializer.initialize(applicationContext)
 
         securityInitializer.initialize(applicationContext)
 
@@ -39,6 +40,5 @@ object AppInitializer : ApplicationContextInitializer<GenericApplicationContext>
         transactionInitializer.initialize(applicationContext)
 
         chatInitializer.initialize(applicationContext)
-        notificationInitializer.initialize(applicationContext)
     }
 }

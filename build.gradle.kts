@@ -56,7 +56,7 @@ dependencies {
     implementation(Spring.boot.webflux)
     implementation(Spring.boot.rsocket)
 
-    /* ??? */
+    /* other */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:_")
 
     /* json parse */
@@ -67,6 +67,7 @@ dependencies {
     // implementation(Spring.boot.data.r2dbc)
     implementation("org.liquibase:liquibase-core:_")
     runtimeOnly("org.postgresql:postgresql:_")
+    implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.8.2")
 
     /* Test Depends */
     testImplementation(Kotlin.test)

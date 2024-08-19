@@ -1,21 +1,27 @@
 package org.pegasus.backendapi.family.service
 
 import org.apache.logging.log4j.kotlin.logger
+import org.pegasus.backendapi.family.AlreadyInFamilyException
 import org.pegasus.backendapi.family.FamilyAlreadyException
 import org.pegasus.backendapi.family.FamilyNotExistException
 import org.pegasus.backendapi.family.FamilyRepository
 import org.pegasus.backendapi.family.model.FamilyMapper
 import org.pegasus.backendapi.family.model.dto.FamilyDto
 import org.pegasus.backendapi.family.model.dto.MemberTransactionDto
+import org.pegasus.backendapi.notification.EventPublisher
+import org.pegasus.backendapi.notification.event.FamilyInviteEvent
 import org.pegasus.backendapi.transaction.model.TransactionMapper
 import org.pegasus.backendapi.transaction.service.TransactionInternalService
 import org.pegasus.backendapi.user.UserMapper
+import org.pegasus.backendapi.user.UserNotFoundException
 import org.pegasus.backendapi.user.service.UserInternalService
+import java.util.*
 
 class FamilyService(
     private val transactionService: TransactionInternalService,
     private val familyRepository: FamilyRepository,
-    private val userService: UserInternalService
+    private val userService: UserInternalService,
+    private val eventPublisher: EventPublisher
 ) {
 
     private val log = logger()
@@ -30,6 +36,17 @@ class FamilyService(
 
         userService.updateFamily(user, family)
         return FamilyMapper.toDto(family)
+    }
+
+    fun createInvite(id: UUID): Boolean {
+        val to = userService.findUser(id) ?: throw UserNotFoundException(id)
+        if (to.family != null) throw AlreadyInFamilyException(to.username)
+        val from = userService.currentUser()
+
+        eventPublisher.publish(FamilyInviteEvent(from.id, from.username, to.id))
+
+        // TODO mby return map<str, str> with errors
+        return true
     }
 
     fun getMembers(): Set<MemberTransactionDto> {

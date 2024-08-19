@@ -33,6 +33,18 @@ val notificationInitializer: ApplicationContextInitializer<GenericApplicationCon
     }
 
     bean {
+        val notificationService = ref<NotificationService>()
+        NotificationEventListener(notificationService)
+    }
+
+    // Failed to instantiate [org.springframework.context.ApplicationEventPublisher]: Specified class is an interface
+    // bean<ApplicationEventPublisher>()
+    // bean {
+    //     val applicationEventPublisher = ref<ApplicationEventPublisher>()
+    //      EventPublisher(applicationEventPublisher)
+    // }
+
+    bean {
 //        val coroutineContext = ref<CoroutineContext>("notificationDispatcher")
 //        val notificationService = ref<NotificationService>()
 //        NotificationHandler(notificationService, coroutineContext)

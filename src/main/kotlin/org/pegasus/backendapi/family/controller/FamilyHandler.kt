@@ -5,6 +5,7 @@ import org.pegasus.backendapi.family.model.MemberTransactionMapper
 import org.pegasus.backendapi.family.model.response.FamilyResponse
 import org.pegasus.backendapi.family.model.response.MemberResponse
 import org.pegasus.backendapi.family.service.FamilyService
+import java.util.*
 
 class FamilyHandler(private val familyService: FamilyService) {
 
@@ -16,6 +17,10 @@ class FamilyHandler(private val familyService: FamilyService) {
     fun members(): Set<MemberResponse> {
         val members = familyService.getMembers()
         return members.map { member -> MemberTransactionMapper.toResponse(member) }.toSet()
+    }
+
+    fun invite(userId: UUID): Boolean {
+        return familyService.createInvite(userId)
     }
 
     fun transactions(): Set<MemberResponse> {

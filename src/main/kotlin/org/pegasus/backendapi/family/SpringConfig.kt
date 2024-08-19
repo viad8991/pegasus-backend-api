@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager
 import org.pegasus.backendapi.family.controller.FamilyHandler
 import org.pegasus.backendapi.family.service.FamilyInternalService
 import org.pegasus.backendapi.family.service.FamilyService
+import org.pegasus.backendapi.notification.EventPublisher
 import org.pegasus.backendapi.transaction.service.TransactionInternalService
 import org.pegasus.backendapi.user.service.UserInternalService
 import org.springframework.context.ApplicationContextInitializer
@@ -11,6 +12,7 @@ import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.router
+import java.util.*
 
 val familyInitializer: ApplicationContextInitializer<GenericApplicationContext> = beans {
 
@@ -23,8 +25,9 @@ val familyInitializer: ApplicationContextInitializer<GenericApplicationContext> 
         val transactionService = ref<TransactionInternalService>()
         val familyRepository = ref<FamilyRepository>()
         val userService = ref<UserInternalService>()
+        val eventPublisher = ref<EventPublisher>()
 
-        FamilyService(transactionService, familyRepository, userService)
+        FamilyService(transactionService, familyRepository, userService, eventPublisher)
     }
 
     bean<FamilyInternalService>()
@@ -41,6 +44,11 @@ val familyInitializer: ApplicationContextInitializer<GenericApplicationContext> 
             "/api/v1/families".nest {
                 POST("/") { _ ->
                     val response = familyHandler.create()
+                    ServerResponse.ok().body(response)
+                }
+                POST("/invite/{id}") { request ->
+                    val userId = UUID.fromString(request.pathVariable("id"))
+                    val response = familyHandler.invite(userId)
                     ServerResponse.ok().body(response)
                 }
                 GET("/members") {

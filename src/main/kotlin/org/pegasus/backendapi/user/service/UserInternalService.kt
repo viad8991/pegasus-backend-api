@@ -7,6 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import java.util.*
 
 open class UserInternalService(private val userRepository: UserRepository) : UserDetailsService {
 
@@ -21,6 +22,10 @@ open class UserInternalService(private val userRepository: UserRepository) : Use
         } else {
             user
         }
+    }
+
+    fun findUser(id: UUID): User? {
+        return userRepository.findById(id)
     }
 
     fun updateFamily(user: User, family: Family): User {

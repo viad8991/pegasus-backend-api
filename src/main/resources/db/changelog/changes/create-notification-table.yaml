@@ -24,6 +24,9 @@ databaseChangeLog:
                   type: TEXT
                   constraints:
                     nullable: false
+              - column:
+                  name: metadata
+                  type: JSONB
 
               - column:
                   name: created

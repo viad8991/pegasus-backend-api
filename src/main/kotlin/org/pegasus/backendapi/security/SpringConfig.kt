@@ -61,6 +61,7 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
 
                     // TODO for test
                     .requestMatchers("/api/v1/category/**").permitAll()
+                    .requestMatchers("/api/v1/family/**").permitAll()
 
                     .requestMatchers("/api/v1/user/**").authenticated()
                     .requestMatchers("/api/v1/transaction").authenticated()
@@ -90,8 +91,8 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
         val rSocketStrategies = RSocketStrategies.builder()
         rSocketStrategies.encoders {
             // it.add(BearerTokenAuthenticationEncoder())
-            it.add(Jackson2JsonEncoder())
             it.add(SimpleAuthenticationEncoder())
+            it.add(Jackson2JsonEncoder())
         }
 
         rSocketStrategies.decoders {
@@ -120,7 +121,7 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
                 authorize.anyRequest().authenticated()
                 authorize.anyExchange().authenticated()
             }
-            // .jwt { jwtSpec -> jwtSpec.authenticationManager(socketFilter) }
+            // .jwt { jwtSpec -> jwtSpec.authenticationManager(jwtFilterManager) }
             .authenticationManager(jwtFilterManager)
             .simpleAuthentication(Customizer.withDefaults())
             .build()
