@@ -1,16 +1,15 @@
 package org.pegasus.backendapi.notification.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.notification.NotificationRepository
-import org.pegasus.backendapi.notification.event.FamilyInviteEvent
-import org.pegasus.backendapi.notification.model.Notification
 import org.pegasus.backendapi.notification.model.NotificationDto
 import org.pegasus.backendapi.notification.model.NotificationMapper
 import org.pegasus.backendapi.notification.model.NotificationStatus
 import org.pegasus.backendapi.user.service.UserInternalService
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Sinks
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 class NotificationService(
     private val notificationRepository: NotificationRepository,
@@ -19,22 +18,27 @@ class NotificationService(
 
     private val log = logger()
 
+    // private val cashe = flow<NotificationDto> { while (isActive) { } }
+    private val sinksByUser = ConcurrentHashMap<UUID, Sinks.Many<NotificationDto>>()
+
     fun notification(): Flux<NotificationDto> {
         val user = userService.currentUser()
         log.info { "get new notify for user $user" }
-        val notReadableNotifications = notificationRepository.findByUserWithStatus(user, NotificationStatus.NOT_READ)
-        if (notReadableNotifications.isEmpty()) {
-            notReadableNotifications.plus(Notification(UUID.randomUUID(), "s8dfa78sd6f7a6d7f"))
+        val sinkByUser = sinksByUser.computeIfAbsent(user.id) { _ -> Sinks.many().replay().all() }
+
+        notificationRepository.findByUserWithStatus(user, NotificationStatus.NOT_READ).forEach { notification ->
+            sinkByUser.tryEmitNext(NotificationMapper.toDto(notification))
         }
-        return Flux.fromIterable(notReadableNotifications)
-            .map { notification -> NotificationMapper.toDto(notification) }
+
+        return sinkByUser
+            .asFlux()
+            .doOnSubscribe { _ -> log.info { "new subscriber" } }
+            .doOnCancel { log.info { "unsubscribe" } }
+
     }
 
-    fun create(event: FamilyInviteEvent) {
-        val body: String = if (event.source is String) event.source as String else throw RuntimeException("")
-        val metadata = mapOf("from" to event.from.toString(), "to" to event.to.toString())
-
-        notificationRepository.create(body, metadata)
+    fun addNew(dto: NotificationDto) {
+        val sinkByUser = sinksByUser.computeIfAbsent(dto.recipient.id) { _ -> Sinks.many().replay().all() }
+        sinkByUser.tryEmitNext(dto)
     }
-
 }

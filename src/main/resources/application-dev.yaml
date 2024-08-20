@@ -13,10 +13,7 @@ spring:
         format_sql: false
 
   level:
-    org:
-      springframework:
-        web: DEBUG
-        security: DEBUG
-
-      pegasus:
-        backendapi: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.pegasus.backendapi: INFO
+    io.rsocket: DEBUG

@@ -10,8 +10,11 @@ import org.apache.logging.log4j.kotlin.logger
 import org.junit.jupiter.api.BeforeAll
 import org.pegasus.backendapi.ApplicationTest
 import org.pegasus.backendapi.notification.model.NotificationDto
+import org.pegasus.backendapi.notification.model.NotificationStatus
 import org.pegasus.backendapi.notification.service.NotificationService
 import org.pegasus.backendapi.security.JwtService
+import org.pegasus.backendapi.user.model.Role
+import org.pegasus.backendapi.user.model.UserDto
 import org.springframework.boot.test.rsocket.server.LocalRSocketServerPort
 import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
@@ -21,6 +24,7 @@ import org.springframework.security.rsocket.metadata.SimpleAuthenticationEncoder
 import org.springframework.security.rsocket.metadata.UsernamePasswordMetadata
 import org.springframework.util.MimeTypeUtils
 import java.net.URI
+import java.time.Instant
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -74,7 +78,24 @@ class NotificationHandlerTest(
         every { mockkJwtService.validateToken(token, username) } returns true
 
         every { mockkNotificationService.notification() } returns flowOf(
-            NotificationDto(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), "foo"),
+            NotificationDto(
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"),
+                "foo",
+                NotificationStatus.NOT_READ,
+                emptyMap(),
+                UserDto(
+                    UUID.randomUUID(),
+                    "",
+                    null,
+                    Instant.now(),
+                    true,
+                    Instant.now(),
+                    Instant.now(),
+                    Role.USER,
+                    true,
+                    null
+                )
+            ),
         ).asFlux()
     }
 

@@ -117,7 +117,7 @@ val securityInitializer: ApplicationContextInitializer<GenericApplicationContext
         rSocketSecurity
             .authorizePayload { authorize ->
                 authorize.setup()
-                authorize.route("api.v1.notification").authenticated()
+                authorize.route("api.v1.notification").permitAll()
                 authorize.anyRequest().authenticated()
                 authorize.anyExchange().authenticated()
             }

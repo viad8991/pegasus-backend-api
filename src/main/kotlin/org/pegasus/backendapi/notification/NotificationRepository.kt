@@ -15,8 +15,8 @@ class NotificationRepository(private val entityManager: EntityManager) {
         .resultList
         .toSet()
 
-    fun create(body: String, metadata: Map<String, String>): Notification {
-        val notification = Notification(body = body, metadata = metadata)
+    fun create(body: String, recipient: User, metadata: Map<String, String>): Notification {
+        val notification = Notification(recipient = recipient, body = body, metadata = metadata)
         entityManager.persist(notification)
         return notification
     }

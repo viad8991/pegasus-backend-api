@@ -18,7 +18,9 @@ import org.springframework.test.context.TestConstructor
 @DBRider
 @DBUnit(
     expectedDbType = RiderDataSource.DBType.POSTGRESQL,
-    cacheConnection = true
+    cacheConnection = true,
+    caseSensitiveTableNames = true,
+    schema = "public"
 )
 @AutoConfigureEmbeddedDatabase(
     provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY,

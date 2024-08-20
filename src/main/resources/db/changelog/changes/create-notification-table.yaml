@@ -15,13 +15,18 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: status
-                  type: VARCHAR(16)
+                  name: recipient_id
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
                   name: body
                   type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(16)
                   constraints:
                     nullable: false
               - column:

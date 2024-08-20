@@ -1,0 +1,6 @@
+users:
+  - username: foobar
+    role: USER
+    email: foobar@mail.com
+    family_id: null
+    password: 123456
