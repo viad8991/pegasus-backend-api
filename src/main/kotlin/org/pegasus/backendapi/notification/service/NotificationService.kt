@@ -1,5 +1,6 @@
 package org.pegasus.backendapi.notification.service
 
+import jakarta.transaction.Transactional
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.notification.NotificationRepository
 import org.pegasus.backendapi.notification.model.NotificationDto
@@ -38,7 +39,7 @@ class NotificationService(
     }
 
     fun addNew(dto: NotificationDto) {
-        val sinkByUser = sinksByUser.computeIfAbsent(dto.recipient.id) { _ -> Sinks.many().replay().all() }
+        val sinkByUser = sinksByUser.computeIfAbsent(dto.recipient) { _ -> Sinks.many().replay().all() }
         sinkByUser.tryEmitNext(dto)
     }
 }

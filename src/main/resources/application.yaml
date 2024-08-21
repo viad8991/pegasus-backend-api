@@ -23,6 +23,7 @@ spring:
   rsocket:
     server:
       port: 7000
+      mapping-path: "/"
       transport: websocket
 
 security:

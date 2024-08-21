@@ -1,20 +1,15 @@
 package org.pegasus.backendapi.notification
 
+import com.github.database.rider.core.api.dataset.DataSet
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.rsocket.metadata.WellKnownMimeType
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.reactor.asFlux
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.apache.logging.log4j.kotlin.logger
 import org.junit.jupiter.api.BeforeAll
 import org.pegasus.backendapi.ApplicationTest
-import org.pegasus.backendapi.notification.model.NotificationDto
-import org.pegasus.backendapi.notification.model.NotificationStatus
-import org.pegasus.backendapi.notification.service.NotificationService
 import org.pegasus.backendapi.security.JwtService
-import org.pegasus.backendapi.user.model.Role
-import org.pegasus.backendapi.user.model.UserDto
 import org.springframework.boot.test.rsocket.server.LocalRSocketServerPort
 import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
@@ -24,27 +19,27 @@ import org.springframework.security.rsocket.metadata.SimpleAuthenticationEncoder
 import org.springframework.security.rsocket.metadata.UsernamePasswordMetadata
 import org.springframework.util.MimeTypeUtils
 import java.net.URI
-import java.time.Instant
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ApplicationTest
+@DataSet(
+    "dataset/yml/users.yml",
+    "dataset/yml/notifications.yml",
+    cleanBefore = true,
+)
 class NotificationHandlerTest(
     @LocalRSocketServerPort
     private val rSocketPort: Int,
-
     @MockkBean
     private val mockkJwtService: JwtService,
-
-    @MockkBean
-    private val mockkNotificationService: NotificationService
 ) {
 
     private val log = logger()
 
     private val token = "stub-user-token"
-    private val username = "user"
+    private val username = "foo"
 
     private val rSocketRequester: RSocketRequester = RSocketRequester
         .builder()
@@ -76,38 +71,16 @@ class NotificationHandlerTest(
     fun setUp() {
         every { mockkJwtService.extractUsername(token) } returns username
         every { mockkJwtService.validateToken(token, username) } returns true
-
-        every { mockkNotificationService.notification() } returns flowOf(
-            NotificationDto(
-                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"),
-                "foo",
-                NotificationStatus.NOT_READ,
-                emptyMap(),
-                UserDto(
-                    UUID.randomUUID(),
-                    "",
-                    null,
-                    Instant.now(),
-                    true,
-                    Instant.now(),
-                    Instant.now(),
-                    Role.USER,
-                    true,
-                    null
-                )
-            ),
-        ).asFlux()
     }
 
     @Test
-    fun `test foo`() = runBlocking {
-        rSocketRequester
-            .route("api.v1.notification")
-            .retrieveFlow<NotificationResponseTest>()
-            .collect { actual ->
-                assertEquals("123e4567-e89b-12d3-a456-426614174000", actual.id.toString())
-                assertEquals("foo", actual.body)
-            }
+    fun `get notify for user`() {
+        val actual = runBlocking {
+            rSocketRequester.route("api.v1.notification").retrieveFlow<NotificationResponseTest>().first()
+        }
+
+        assertEquals("123e4567-e89b-12d3-a456-426614174000", actual.id.toString())
+        assertEquals("test", actual.body)
     }
 
     data class NotificationResponseTest(

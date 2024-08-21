@@ -1,0 +1,6 @@
+notifications:
+  - id: '123e4567-e89b-12d3-a456-426614174000'
+    recipient_id: '949006f6-6c44-4882-a98f-7236cdf28e1a'
+    body: 'test'
+    status: 'NOT_READ'
+    metadata: '{"foo": "bar"}'

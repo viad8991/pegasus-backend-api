@@ -5,6 +5,7 @@ import com.github.database.rider.core.connection.RiderDataSource
 import com.github.database.rider.spring.api.DBRider
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
 import org.junit.jupiter.api.TestInstance
+import org.pegasus.backendapi.utils.DBRiderPostgresqlDataTypeFactory
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
@@ -20,7 +21,10 @@ import org.springframework.test.context.TestConstructor
     expectedDbType = RiderDataSource.DBType.POSTGRESQL,
     cacheConnection = true,
     caseSensitiveTableNames = true,
-    schema = "public"
+    columnSensing = true,
+    mergeDataSets = true,
+    schema = "public",
+    dataTypeFactoryClass = DBRiderPostgresqlDataTypeFactory::class,
 )
 @AutoConfigureEmbeddedDatabase(
     provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY,

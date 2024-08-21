@@ -19,7 +19,7 @@ class UserRepository(private val entityManager: EntityManager) {
             .setParameter("username", username)
             .singleResult
     } catch (ex: NoResultException) {
-        log.debug(ex) { "cant not found user by username $username" }
+        log.warn(ex) { "cant not found user by username: $username" }
         null
     }
 
