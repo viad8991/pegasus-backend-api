@@ -40,6 +40,7 @@ class NotificationService(
 
     fun addNew(dto: NotificationDto) {
         val sinkByUser = sinksByUser.computeIfAbsent(dto.recipient) { _ -> Sinks.many().replay().all() }
+        log.info { "sinks subs ${sinkByUser.currentSubscriberCount()}" }
         sinkByUser.tryEmitNext(dto)
     }
 }

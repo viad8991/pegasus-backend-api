@@ -24,11 +24,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ApplicationTest
-@DataSet(
-    "dataset/yml/users.yml",
-    "dataset/yml/notifications.yml",
-    cleanBefore = true,
-)
 class NotificationHandlerTest(
     @LocalRSocketServerPort
     private val rSocketPort: Int,
@@ -74,6 +69,7 @@ class NotificationHandlerTest(
     }
 
     @Test
+    @DataSet("dataset/yml/users.yml", "dataset/yml/notifications.yml", cleanBefore = true)
     fun `get notify for user`() {
         val actual = runBlocking {
             rSocketRequester.route("api.v1.notification").retrieveFlow<NotificationResponseTest>().first()

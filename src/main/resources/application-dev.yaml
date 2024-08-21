@@ -15,5 +15,5 @@ spring:
   level:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
-    org.pegasus.backendapi: INFO
+    org.pegasus.backendapi: DEBUG
     io.rsocket: DEBUG

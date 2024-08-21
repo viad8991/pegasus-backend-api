@@ -43,6 +43,7 @@ class JwtFilterManager(
 
     override fun authenticate(authentication: Authentication): Mono<Authentication> {
         val jwtToken = authentication.credentials as String
+        log.info { "new auth request by socket with token $jwtToken" }
         val authenticationToken = validate(jwtToken)
         return Mono.just(authenticationToken!!)
     }
