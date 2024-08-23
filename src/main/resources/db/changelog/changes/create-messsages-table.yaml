@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-messages-table-20240823
+      author: vshevchenko
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValue: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: sender_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValue: NOW()
+                  constraints:
+                    nullable: false
+              # Если бы нужно было редактировать сообщения
+                  # - column:
+                  # name: update
+                  # type: TIMESTAMP WITH TIME ZONE
+                  # defaultValue: NOW()
+                    # constraints:
+                    # nullable: false
+                  # - column:
+                  # name: version
+                  # type: BIGINT
+                  # defaultValue: '0'
+                    # constraints:
+                    # nullable: false

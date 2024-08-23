@@ -5,11 +5,8 @@ import org.pegasus.backendapi.notification.model.NotificationMapper
 import org.pegasus.backendapi.notification.model.NotificationResponse
 import org.pegasus.backendapi.notification.service.NotificationService
 import org.pegasus.backendapi.user.service.UserInternalService
-import org.springframework.messaging.handler.annotation.MessageMapping
-import org.springframework.messaging.handler.annotation.Payload
-import org.springframework.messaging.rsocket.RSocketRequester
-import org.springframework.messaging.rsocket.annotation.ConnectMapping
-import org.springframework.stereotype.Controller
+import org.springframework.messaging.handler.annotation.MessageMapping // Тебя тут не должно быть
+import org.springframework.stereotype.Controller // И тебя
 import reactor.core.publisher.Flux
 
 @Controller // чорт №1
@@ -22,18 +19,6 @@ class NotificationHandler(
 ) /*: CoroutineScope*/ {
 
     private val log = logger()
-
-    @ConnectMapping
-    fun connect(rSocketRequester: RSocketRequester, @Payload id: String) {
-        log.info { "new connection with id: $id" }
-        if (id.isNotEmpty()) {
-            log.info { "Connection approved" }
-            return
-        }
-
-        log.info { "connection denied, try to dispose connect" }
-        rSocketRequester.rsocket()?.dispose()
-    }
 
     @MessageMapping("notification") // чорт №3
     fun notification(): Flux<NotificationResponse> {

@@ -1,7 +1,6 @@
 package org.pegasus.backendapi.category
 
 import org.apache.logging.log4j.kotlin.logger
-import org.pegasus.backendapi.category.model.Category
 import org.pegasus.backendapi.category.model.CategoryDto
 import org.pegasus.backendapi.category.model.CategoryMapper
 import org.pegasus.backendapi.category.model.CategoryResponse
@@ -24,8 +23,8 @@ class CategoryHandler(private val categoryService: CategoryService) {
     fun create(request: CategoryCreateRequest): CategoryResponse {
         log.info { "new request to create with param $request" }
 
-        val categoryDtoRequest : CategoryDto = CategoryMapper.toDto(request)
-        val categoryDtoResponse : CategoryDto = categoryService.create(categoryDtoRequest)
+        val categoryDtoRequest: CategoryDto = CategoryMapper.toDto(request)
+        val categoryDtoResponse: CategoryDto = categoryService.create(categoryDtoRequest)
         return CategoryMapper.toResponse(categoryDtoResponse)
     }
 

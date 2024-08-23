@@ -8,8 +8,6 @@ import org.pegasus.backendapi.category.service.CategoryService
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.reactive.function.server.coRouter
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.router
 import java.util.*

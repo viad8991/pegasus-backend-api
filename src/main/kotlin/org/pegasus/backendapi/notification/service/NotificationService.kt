@@ -1,6 +1,5 @@
 package org.pegasus.backendapi.notification.service
 
-import jakarta.transaction.Transactional
 import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.notification.NotificationRepository
 import org.pegasus.backendapi.notification.model.NotificationDto
