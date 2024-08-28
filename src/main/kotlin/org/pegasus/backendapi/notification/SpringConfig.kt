@@ -47,10 +47,20 @@ val notificationInitializer: ApplicationContextInitializer<GenericApplicationCon
     //      EventPublisher(applicationEventPublisher)
     // }
 
-    bean {
-        // val coroutineContext = ref<CoroutineContext>("notificationDispatcher")
-        // val notificationService = ref<NotificationService>()
-        // NotificationHandler(notificationService, coroutineContext)
-    }
+    // TODO моя мысль была, что coRouter { } и типом возвращаемого значения Flow/Flux автоматически преобразует в
+    //  в маршруты, тесты показали - нэт
+    // bean {
+    //     val notificationService = ref<NotificationService>()
+    //     val notificationHandler = NotificationHandler(notificationService)
+    //
+    //     coRouter {
+    //         "api.v1".nest {
+    //             GET("notification") {
+    //                 val notifications = notificationHandler.notification()
+    //                 ServerResponse.ok().bodyAndAwait(notifications.asFlow())
+    //             }
+    //         }
+    //     }
+    // }
 
 }

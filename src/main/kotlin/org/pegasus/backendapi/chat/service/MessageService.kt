@@ -6,12 +6,23 @@ import org.pegasus.backendapi.chat.model.MessageMapper
 import org.pegasus.backendapi.family.FamilyNotExistException
 import org.pegasus.backendapi.family.service.FamilyInternalService
 import org.pegasus.backendapi.user.service.UserInternalService
+import reactor.core.publisher.Sinks
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 class MessageService(
     private val userService: UserInternalService,
     private val familyService: FamilyInternalService,
     private val messageRepository: MessageRepository,
 ) {
+
+    private val sinksByUser = ConcurrentHashMap<UUID, Sinks.One<MessageDto>>()
+
+    fun messages() {
+        val currentUser = userService.currentUser()
+        val sinkByUser = sinksByUser.computeIfAbsent(currentUser.id) { _ -> Sinks.one() }
+
+    }
 
     fun findMessages(): List<MessageDto> {
         val currentUser = userService.currentUser()

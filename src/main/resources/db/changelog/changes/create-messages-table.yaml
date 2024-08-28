@@ -20,7 +20,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: group_id
+                  name: family_id
                   type: UUID
                   constraints:
                     nullable: false

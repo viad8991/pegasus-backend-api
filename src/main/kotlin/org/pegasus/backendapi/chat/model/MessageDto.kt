@@ -5,7 +5,11 @@ import java.time.Instant
 import java.util.*
 
 data class MessageDto(
+
     val senderId: UUID,
+
     val body: String,
+
     val created: Instant
+
 ) : IDto

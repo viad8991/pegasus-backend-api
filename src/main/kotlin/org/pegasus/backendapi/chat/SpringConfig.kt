@@ -1,6 +1,7 @@
 package org.pegasus.backendapi.chat
 
 import jakarta.persistence.EntityManager
+import org.pegasus.backendapi.chat.handler.RestMessageHandler
 import org.pegasus.backendapi.chat.model.MessageRequest
 import org.pegasus.backendapi.chat.service.MessageInternalService
 import org.pegasus.backendapi.chat.service.MessageService
@@ -33,11 +34,11 @@ val chatInitializer: ApplicationContextInitializer<GenericApplicationContext> = 
 
     bean {
         val messageService = ref<MessageService>()
-        MessageHandler(messageService)
+        RestMessageHandler(messageService)
     }
 
     bean {
-        val messageHandler = ref<MessageHandler>()
+        val restMessageHandler = ref<RestMessageHandler>()
 
         router {
             "/api/v1/messages".nest {
@@ -45,12 +46,12 @@ val chatInitializer: ApplicationContextInitializer<GenericApplicationContext> = 
                 //  RequestChannel по rSocket
                 POST("/") { serverRequest ->
                     val message = serverRequest.body(MessageRequest::class.java)
-                    val response = messageHandler.message(message)
+                    val response = restMessageHandler.message(message)
 
                     ServerResponse.ok().body(response)
                 }
                 GET("/chat") { _ ->
-                    val response = messageHandler.messages()
+                    val response = restMessageHandler.messages()
 
                     if (response.isEmpty()) {
                         ServerResponse.noContent().build()

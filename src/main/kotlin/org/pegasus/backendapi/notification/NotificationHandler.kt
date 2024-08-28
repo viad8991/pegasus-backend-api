@@ -4,15 +4,13 @@ import org.apache.logging.log4j.kotlin.logger
 import org.pegasus.backendapi.notification.model.NotificationMapper
 import org.pegasus.backendapi.notification.model.NotificationResponse
 import org.pegasus.backendapi.notification.service.NotificationService
-import org.pegasus.backendapi.user.service.UserInternalService
-import org.springframework.messaging.handler.annotation.MessageMapping // Тебя тут не должно быть
-import org.springframework.stereotype.Controller // И тебя
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 
 @Controller // чорт №1
 @MessageMapping("api.v1") // чорт №2
 class NotificationHandler(
-    private val userInternalService: UserInternalService,
     private val notificationService: NotificationService,
     // @Qualifier(value = "notificationDispatcher")
     // override val coroutineContext: CoroutineContext,
